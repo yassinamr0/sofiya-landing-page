@@ -45,7 +45,8 @@ export const en: Content = {
     backdropNote: "Backdrop photos: placeholder",
     playLabel: "Play the intro video",
     videoPendingNote: "The real intro video plays here.",
-    // PLACEHOLDER: add src ("/media/intro-lose.mp4") and poster ("/media/intro-lose.jpg") when the videos exist.
+    // PLACEHOLDER: when the videos are hosted, add their links, e.g.
+    // src: "https://<host>/intro-lose.m3u8" (or .mp4), poster: "https://<host>/intro-lose.jpg"
     video: {
       lose: { placeholderLabel: "Placeholder: weight-loss intro video" },
       gain: { placeholderLabel: "Placeholder: muscle-gain intro video" },

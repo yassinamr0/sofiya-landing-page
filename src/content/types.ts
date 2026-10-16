@@ -41,8 +41,10 @@ export type Chat = {
 };
 
 /**
- * An intro video. Until `src` is set, the frame shows `placeholderLabel` and the
- * goal's drawing. Put files in public/media/ (H.264 MP4 + a JPG poster frame).
+ * A 16:9 intro video, hosted outside the repo. `src` is a direct MP4 link or a
+ * streaming (.m3u8 / HLS) link; `poster` is a still image link shown before
+ * playing. Until `src` is set, the frame shows `placeholderLabel` and the
+ * goal's drawing. YouTube/Vimeo page links do not work here.
  */
 export type HeroVideo = {
   src?: string;

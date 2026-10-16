@@ -35,7 +35,7 @@ export function Hero({ content, applyLabel }: Props) {
 
           {/* Both videos are in the page; <html data-goal> hides the other one before first paint. */}
           <div
-            className="fade mx-auto mt-[clamp(36px,5vw,72px)] w-full max-w-[600px] min-[640px]:w-[clamp(340px,44vw,640px)] min-[640px]:max-w-none"
+            className="fade mx-auto mt-[clamp(36px,5vw,72px)] w-full max-w-[1000px]"
             style={{ "--d": "420ms" } as CSSProperties}
           >
             {GOALS.map((goal) => (

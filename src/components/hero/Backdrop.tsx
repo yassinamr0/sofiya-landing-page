@@ -15,7 +15,7 @@ export function Backdrop({ note }: { note: string }) {
           <span key={i} className={`grain aspect-[3/4] ${i % 2 ? "bg-surface-2" : "bg-surface-3"}`} />
         ))}
       </div>
-      <p className="absolute start-(--margin) top-[calc(clamp(560px,92vh,900px)-56px)] z-[1] m-0 hidden text-note text-muted min-[640px]:block">
+      <p className="absolute end-(--margin) top-[84px] z-[1] m-0 hidden text-note text-muted min-[640px]:block">
         {note}
       </p>
     </>
