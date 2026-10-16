@@ -16,7 +16,7 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 ## Step 2: The gate ("What are you?")
 - [x] Full-screen question shown first, before anything else, in a funny tone.
 - [x] Two choices: **3egl** (calf) for someone heavy who wants to lose weight, and **Ma2asha** (broomstick) for someone skinny who wants to bulk up.
-- [x] Store the goal (remember it between visits), reveal the page, with a reset option for development.
+- [x] Store the goal for the current page view (the gate shows on every visit), reveal the page, with a reset option for development.
 - [x] Placeholder illustrations clearly marked. The entrance and the choice should feel fun but fast.
 
 ## Step 3: The hero
@@ -38,7 +38,7 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 ## Step 6: The goose
 - [x] Propose the animation technique and get approval.
 - [x] Build: enters from the side, waddles to the Apply button, pecks it, turns muscular, runs off.
-- [x] Always plays for every visitor (no reduced-motion fallback, no hiding it), once per visit, after the gate. Works at phone and desktop sizes. The button stays clickable the whole time.
+- [x] Always plays for every visitor (no reduced-motion fallback, no hiding it), every time the page is opened, after the gate. Works at phone and desktop sizes. The button stays clickable the whole time.
 
 ## Step 7: Quality pass
 - [ ] Mobile test on a real phone, including the Instagram in-app browser and iOS Safari. (Emulated touch run done; real-device checklist in PLACEHOLDERS.md.)

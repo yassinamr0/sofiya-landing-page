@@ -60,7 +60,7 @@ Next.js resizes and compresses these automatically. Photos around 1600px on the 
 Emulation can't reproduce these, so check them on an actual iPhone and Android phone:
 
 1. Open the site **from an Instagram DM or bio link** (Instagram's in-app browser) and in **iOS Safari**.
-2. Gate: tap both answers (use `?reset` in the address to see the gate again).
+2. Gate: tap both answers (reload the page to see the gate again).
 3. Intro video: tap play. It should play inline with sound, never on its own.
 4. Goose: scroll to the Apply button under the video. It walks in, pecks, flexes and runs off; the button still works while it's there.
 5. "More results": swipe the strip sideways; the page itself shouldn't move.

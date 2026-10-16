@@ -256,7 +256,7 @@
 
 /* ---------- Gate or page ----------
    Decided by attributes the boot script in layout.tsx sets before first paint,
-   so a returning visitor never sees the gate flash. Unlayered on purpose, so
+   so ?goal= (testing) never shows a flash of the gate. Unlayered on purpose, so
    these win over the layout utilities on the same elements. */
 
 [data-js]:not([data-goal]) .page-root {

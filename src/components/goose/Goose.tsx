@@ -15,10 +15,10 @@ const PECK_TIP_X = 142.3;
 /** How far (px) the bill presses into the button's edge at the bottom of a peck. */
 const BITE = 3;
 
-const WALK_SPEED = 200; // px per second
+const WALK_SPEED = 340; // px per second
 /** The buff goose is visibly bigger than the one that walked in. */
 const BUFF_SCALE = 1.15;
-const PECK_MS = 420;
+const PECK_MS = 320;
 
 type Props = {
   /** The Apply link to peck. */
@@ -79,7 +79,10 @@ export default function Goose({ target, root, onDone }: Props) {
       // Come in from the right whenever the goose fits there: the hero button sits at the
       // start of its row, so the left side means walking across the headline beside it.
       const fromRight = viewportWidth - button.right >= width + 24 || viewportWidth - button.right >= button.left;
-      const top = button.bottom - origin.top - FEET_Y * scale;
+      // The button may still be rising in with the hero's fade: stand where it will come to rest.
+      const fade = target.closest<HTMLElement>(".fade");
+      const rising = fade ? new DOMMatrix(getComputedStyle(fade).transform).m42 : 0;
+      const top = button.bottom - rising - origin.top - FEET_Y * scale;
       const tip = PECK_TIP_X * scale;
       // Stand so that at the bottom of a peck the bill just presses the button's near edge.
       const standX = fromRight
@@ -94,14 +97,14 @@ export default function Goose({ target, root, onDone }: Props) {
       goose.style.transform = at(offscreenX, top);
       goose.style.opacity = "1";
       goose.classList.add("is-walking");
-      const walkMs = Math.min(2200, Math.max(900, (Math.abs(standX - offscreenX) / WALK_SPEED) * 1000));
+      const walkMs = Math.min(1200, Math.max(500, (Math.abs(standX - offscreenX) / WALK_SPEED) * 1000));
       await play(goose, [{ transform: at(offscreenX, top) }, { transform: at(standX, top) }], {
         duration: walkMs,
         easing: "linear",
       });
       goose.classList.remove("is-walking");
       if (cancelled) return;
-      await wait(160);
+      await wait(60);
 
       // 2. Two pecks; the button takes each one with a small press.
       const push = fromRight ? -3 : 3;
@@ -131,7 +134,7 @@ export default function Goose({ target, root, onDone }: Props) {
         await peck;
       }
       if (cancelled) return;
-      await wait(120);
+      await wait(60);
 
       // 3. Turns buff: the plain goose shrinks away, the buff one pops in with a burst.
       play(walk, [{ opacity: 1, transform: "scale(1)" }, { opacity: 0, transform: "scale(0.94)" }], {
@@ -168,16 +171,16 @@ export default function Goose({ target, root, onDone }: Props) {
           { transform: `scale(${BUFF_SCALE + 0.07})`, offset: 0.75, easing: EASE_IN_OUT },
           { transform: `scale(${BUFF_SCALE})` },
         ],
-        { duration: 760, easing: "linear" },
+        { duration: 600, easing: "linear" },
       );
       if (cancelled) return;
-      await wait(260);
+      await wait(140);
 
       // 5. Turns around and runs off the way it came.
       facing(false);
       goose.classList.add("is-running");
       await play(goose, [{ transform: at(standX, top) }, { transform: at(offscreenX, top) }], {
-        duration: 700,
+        duration: 550,
         easing: EASE_IN_OUT,
       });
       if (!cancelled) onDone();

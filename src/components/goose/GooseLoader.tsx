@@ -3,68 +3,58 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
 
-// The goose's code is only fetched when it is about to play.
-const Goose = dynamic(() => import("./Goose"), { ssr: false });
+// The goose's code is split out of the main bundle and fetched as soon as the page mounts.
+const loadGoose = () => import("./Goose");
+const Goose = dynamic(loadGoose, { ssr: false });
 
-const PLAYED_KEY = "sv-goose";
-// Backup for when sessionStorage is blocked: at least never twice in one page view.
+// Never twice in one page view (e.g. after "Pick again" in development).
 let playedThisPageView = false;
 
-function hasPlayed(): boolean {
-  if (playedThisPageView) return true;
-  try {
-    return window.sessionStorage.getItem(PLAYED_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
-function markPlayed(): void {
-  playedThisPageView = true;
-  try {
-    window.sessionStorage.setItem(PLAYED_KEY, "1");
-  } catch {}
-}
-
-// Lets the hero's entrance fade finish, so the button is measured where it rests.
-const SETTLE_MS = 900;
+const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
 
 type Stage = { target: HTMLElement; root: HTMLElement };
 
 /**
- * Starts the goose once per visit, as soon as the hero's Apply button is
- * properly on screen. The page (and so the button) is hidden behind the gate
- * until it is answered, so this also means "after the gate".
+ * Starts the goose every time the page is opened, as soon as the hero's Apply
+ * button is properly on screen. The page (and so the button) is hidden behind
+ * the gate until it is answered, so this also means "after the gate".
  */
 export function GooseLoader() {
   const [stage, setStage] = useState<Stage | null>(null);
   const finish = useCallback(() => setStage(null), []);
 
   useEffect(() => {
-    if (hasPlayed()) return;
+    if (playedThisPageView) return;
+    loadGoose();
     const target = document.querySelector<HTMLElement>("[data-goose-target] a");
     const root = document.querySelector<HTMLElement>(".page-root");
     if (!target || !root) return;
 
-    let timer: number | undefined;
+    let visible = false;
+    let waiting = false;
+    const start = async () => {
+      if (waiting) return;
+      waiting = true;
+      // Two frames, so the hero's entrance fade has started (the goose allows for the rest).
+      await nextFrame();
+      await nextFrame();
+      waiting = false;
+      // Scrolled past before it settled: wait for the next time it is on screen.
+      if (!visible || playedThisPageView) return;
+      observer.disconnect();
+      playedThisPageView = true;
+      setStage({ target, root });
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        window.clearTimeout(timer);
-        // Scrolled past before it settled: wait for the next time it is on screen.
-        if (!entry.isIntersecting || hasPlayed()) return;
-        timer = window.setTimeout(() => {
-          observer.disconnect();
-          markPlayed();
-          setStage({ target, root });
-        }, SETTLE_MS);
+        visible = entry.isIntersecting;
+        if (visible) start();
       },
       { threshold: 0.6 },
     );
     observer.observe(target);
-    return () => {
-      observer.disconnect();
-      window.clearTimeout(timer);
-    };
+    return () => observer.disconnect();
   }, []);
 
   return stage ? <Goose target={stage.target} root={stage.root} onDone={finish} /> : null;

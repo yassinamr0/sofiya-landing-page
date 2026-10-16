@@ -2,8 +2,7 @@
 // the feet on y = 136; the animation mirrors them to face left.
 //
 // What makes it a goose and not a duck: the long S-shaped neck standing high
-// above a big body, the orange bill with the knob at its base, the upturned
-// tail and the tall stance.
+// above a big body, the long orange bill, the upturned tail and the tall stance.
 
 const WHITE = "#F5F5F2";
 const LINE = "#2A2A2E";
@@ -46,7 +45,6 @@ export function WalkingGoose() {
           <path d="M74 88C90 70 70 52 84 32" stroke={WHITE} strokeWidth="13" strokeLinecap="round" fill="none" />
           <circle cx="88" cy="27" r="12" fill={WHITE} stroke={LINE} strokeWidth="2" />
           <path d="M97 24L115 31L97 35Z" fill={ORANGE} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
-          <circle cx="98" cy="22" r="4.5" fill={ORANGE} stroke={LINE} strokeWidth="2" />
           <circle cx="91" cy="24" r="2.4" fill={INK} />
           {/* The cheeky, slightly menacing brow every goose has. */}
           <path d="M85 17L95 21" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
@@ -90,7 +88,6 @@ export function BuffGoose() {
         <path d="M62 88L66 46" stroke={WHITE} strokeWidth="18" strokeLinecap="round" />
         <circle cx="68" cy="36" r="13" fill={WHITE} stroke={LINE} strokeWidth="2" />
         <path d="M80 33L99 40L80 45Z" fill={ORANGE} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
-        <circle cx="81" cy="30" r="4.5" fill={ORANGE} stroke={LINE} strokeWidth="2" />
         <circle cx="72" cy="36" r="2.4" fill={INK} />
         {/* Sweatband, tails flying. */}
         <rect x="55" y="24" width="26" height="6" rx="2" fill={PINK} stroke={LINE} strokeWidth="1.5" />

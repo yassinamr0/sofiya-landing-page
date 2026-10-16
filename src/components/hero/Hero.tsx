@@ -13,59 +13,67 @@ type Props = {
   applyLabel: string;
 };
 
-/** Headline, the goal's intro video, then "You don't have to choose us." */
+/**
+ * Headline, the goal's intro video, then "You don't have to choose us." and
+ * Apply. Sized so the Apply button is on screen without scrolling on most
+ * phones and laptops; from 900px the video and the Apply block sit side by side.
+ */
 export function Hero({ content, applyLabel }: Props) {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative px-(--margin) pt-[clamp(28px,6vh,72px)] pb-[clamp(96px,12vw,200px)]"
+      className="relative px-(--margin) pt-[clamp(8px,2vh,32px)] pb-[clamp(96px,12vw,200px)]"
     >
       <div className="mx-auto max-w-[1376px]">
         <Reveal immediate className="text-center">
           <h1 id="hero-title" className="font-display uppercase">
-            <span className="block text-shout font-bold">
+            <span className="block text-[clamp(48px,14vw,112px)] leading-[0.88] font-bold tracking-[-0.02em]">
               <MaskedLines lines={content.shout} />
             </span>
-            <span className="mask mt-[0.4em] py-[0.12em] text-title leading-[1.22] font-semibold">
+            <span className="mask mt-[0.3em] py-[0.12em] text-[clamp(26px,7.2vw,44px)] leading-[1.15] font-semibold">
               <span className="rise" style={{ "--d": "240ms" } as CSSProperties}>
                 <RichText value={content.punch} />
               </span>
             </span>
           </h1>
+        </Reveal>
 
+        <div className="mt-[clamp(14px,2.5vw,32px)] grid gap-[clamp(18px,3vw,40px)] min-[900px]:grid-cols-12 min-[900px]:items-center min-[900px]:gap-x-10">
           {/* Both videos are in the page; <html data-goal> hides the other one before first paint. */}
-          <div
-            className="fade mx-auto mt-[clamp(36px,5vw,72px)] w-full max-w-[1000px]"
-            style={{ "--d": "420ms" } as CSSProperties}
-          >
-            {GOALS.map((goal) => (
-              <div key={goal} data-for-goal={goal}>
-                <HeroVideo
-                  goal={goal}
-                  video={content.video[goal]}
-                  playLabel={content.playLabel}
-                  pendingNote={content.videoPendingNote}
-                />
-              </div>
-            ))}
-          </div>
-        </Reveal>
+          <Reveal immediate className="min-[900px]:col-span-7">
+            {/* Narrower on short screens, so the Apply button below still fits. */}
+            <div
+              className="fade mx-auto w-[min(92%,max(260px,calc((100svh-500px)*16/9)))] min-[900px]:w-[min(100%,max(400px,calc((100svh-400px)*16/9)))]"
+              style={{ "--d": "420ms" } as CSSProperties}
+            >
+              {GOALS.map((goal) => (
+                <div key={goal} data-for-goal={goal}>
+                  <HeroVideo
+                    goal={goal}
+                    video={content.video[goal]}
+                    playLabel={content.playLabel}
+                    pendingNote={content.videoPendingNote}
+                  />
+                </div>
+              ))}
+            </div>
+          </Reveal>
 
-        <Reveal className="mt-[clamp(64px,9vw,150px)] grid gap-6 min-[900px]:grid-cols-12 min-[900px]:items-end min-[900px]:gap-x-8">
-          <h2 className="fade font-display text-title font-bold uppercase min-[900px]:col-span-6">
-            <RichText value={content.choose.title} />
-          </h2>
-          <div
-            className="fade min-[900px]:col-span-5 min-[900px]:col-start-8"
-            style={{ "--d": "90ms" } as CSSProperties}
-          >
-            <p className="mb-7 max-w-[34ch]">{content.choose.body}</p>
-            {/* The goose walks to this button and pecks it (see components/goose). */}
-            <span data-goose-target className="inline-block">
-              <ApplyButton source="hero" label={applyLabel} />
-            </span>
-          </div>
-        </Reveal>
+          <Reveal className="text-center min-[900px]:col-span-5 min-[900px]:text-start">
+            <h2 className="fade font-display text-[clamp(26px,7vw,56px)] leading-[1.05] font-bold uppercase">
+              <RichText value={content.choose.title} />
+            </h2>
+            <div className="fade" style={{ "--d": "90ms" } as CSSProperties}>
+              <p className="mx-auto mt-2.5 mb-4 max-w-[36ch] min-[900px]:mx-0 min-[900px]:mt-4 min-[900px]:mb-6">
+                {content.choose.body}
+              </p>
+              {/* The goose walks to this button and pecks it (see components/goose). */}
+              <span data-goose-target className="inline-block">
+                <ApplyButton source="hero" label={applyLabel} />
+              </span>
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

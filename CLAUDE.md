@@ -26,7 +26,7 @@ A rough Claude Design sketch exists: https://claude.ai/artifact/U723osQZK9PTQr8a
 Use it for **structure, copy and flow only**. It is deliberately basic. Its colors, fonts, layout and styling are NOT requirements: ignore them. The real site must be far higher quality: custom, premium, confident, not a template. You have full creative freedom over the visual design (color, typography, layout, imagery, motion). Propose your own direction.
 
 ## Page flow
-1. **Gate: "What are you?"** Full-screen, first thing seen, before anything else. Funny tone. Two choices: **3egl** (calf, for someone heavy who wants to lose weight) and **Ma2asha** (broomstick, for someone skinny who wants to bulk up). Choosing one stores the goal and reveals the real page. Wording and illustrations are placeholders and may change. The choice must also be remembered (localStorage, with try/catch) so a returning visitor skips the gate. Provide a way to reset it during development.
+1. **Gate: "What are you?"** Full-screen, first thing seen, before anything else. Funny tone. Two choices: **3egl** (calf, for someone heavy who wants to lose weight) and **Ma2asha** (broomstick, for someone skinny who wants to bulk up). Choosing one stores the goal and reveals the real page. Wording and illustrations are placeholders and may change. The gate shows on every visit; the choice is kept only for that page view. Provide a way to reset it during development.
 2. **Hero:** headline "Six months from now, you won't recognize yourself." above a large, centered intro video. The video shown depends on the goal (calf = weight-loss video, broomstick = muscle-gain video). A faded photo backdrop sits behind everything. Under the video: "You don't have to choose us." and "You have a hundred other options. Keep scrolling, keep comparing, keep waiting. Or take a real step." with the **Apply now** button.
 3. **Contrast:** "Most coaches change how you look. We change how you live." with a Most programs vs Here comparison (template plan vs built for you; silence vs daily check-ins; no real calls vs weekly meeting plus calls; only the body vs the whole lifestyle).
 4. **Chats:** "Other coaches go quiet. Sofiya doesn't." Two illustrated chat screens side by side: a "Most programs" chat of unanswered messages ending "No reply for 6 days", and a "Here" chat that follows the goal (weight-loss chat or muscle chat). Labelled "Illustrative conversations, not real clients."
@@ -41,7 +41,7 @@ There is no FAQ section. Do not add one.
 ## The goose (required, always on)
 An animated goose comes in from the side of the screen, waddles to the **Apply now** button, pecks it, turns **muscular**, then runs off. It is the site's signature moment.
 - It plays for **every** visitor. Do **not** add a reduced-motion fallback or hide it for anyone. It's a website, not an app.
-- It should trigger after the gate is passed and the hero is visible, once per visit.
+- It should trigger after the gate is passed and the hero is visible, every time the page is opened.
 - It must find the button's real on-screen position (mobile and desktop differ) and not block or cover the button for long. The button stays clickable the whole time.
 - The muscular transformation needs to be funny and readable at phone size. Propose the technique (hand-built SVG with GSAP, Rive, Lottie or a sprite sheet) and explain the pick before building. Keep the animation light enough not to hurt page speed.
 

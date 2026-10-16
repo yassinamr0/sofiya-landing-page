@@ -14,7 +14,7 @@ const GOALS: Goal[] = ["lose", "gain"];
 // How long the picked card flashes and the gate slides away before the page shows.
 const LEAVE_MS = 500;
 
-/** "What are you?": the full-screen question every new visitor answers first. */
+/** "What are you?": the full-screen question every visitor answers first, on every visit. */
 export function Gate({ content }: { content: Content["gate"] }) {
   const [picked, setPicked] = useState<Goal | null>(null);
 

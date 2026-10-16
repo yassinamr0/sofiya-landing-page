@@ -2,11 +2,11 @@
 
 import { useSyncExternalStore } from "react";
 import type { Goal } from "@/content";
-import { clearGoal, isGoal, saveGoal } from "./goal";
+import { readGoal } from "./goal";
 
-// The current goal lives on <html data-goal>. The boot script in layout.tsx
-// sets it before first paint, CSS uses it to show either the gate or the page,
-// and components read it with useGoal().
+// The current goal lives on <html data-goal>. CSS uses it to show either the
+// gate or the page, and components read it with useGoal(). It is not saved,
+// so every visit starts at the gate.
 
 const listeners = new Set<() => void>();
 
@@ -15,11 +15,6 @@ function subscribe(listener: () => void) {
   return () => {
     listeners.delete(listener);
   };
-}
-
-function getSnapshot(): Goal | null {
-  const goal = document.documentElement.dataset.goal;
-  return isGoal(goal) ? goal : null;
 }
 
 function getServerSnapshot(): Goal | null {
@@ -31,17 +26,15 @@ function notify() {
 }
 
 export function useGoal(): Goal | null {
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore(subscribe, readGoal, getServerSnapshot);
 }
 
 export function chooseGoal(goal: Goal): void {
-  saveGoal(goal);
   document.documentElement.dataset.goal = goal;
   notify();
 }
 
 export function resetGoal(): void {
-  clearGoal();
   delete document.documentElement.dataset.goal;
   notify();
 }
