@@ -5,13 +5,13 @@ Read CLAUDE.md first. Work top to bottom, one step at a time. Check each step at
 The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. Its look is not a requirement. You have full freedom over the visual design.
 
 ## Step 0: Direction (before any code)
-- [ ] Look at the reference sketch and propose your own, much higher-quality visual direction. Show it as one hero mock-up for approval before building anything else.
-- [ ] Confirm the stack and how the intro videos will be hosted.
+- [x] Look at the reference sketch and propose your own, much higher-quality visual direction. Show it as one hero mock-up for approval before building anything else.
+- [x] Confirm the stack and how the intro videos will be hosted.
 
 ## Step 1: Foundation
-- [ ] Create the project and set up the design tokens from the approved direction.
-- [ ] Put all copy into one typed content file (English only, structured so a second language can be added later).
-- [ ] Add the Typeform URL as an env var and one shared Apply button component.
+- [x] Create the project and set up the design tokens from the approved direction.
+- [x] Put all copy into one typed content file (English only, structured so a second language can be added later).
+- [x] Add the Typeform URL as an env var and one shared Apply button component.
 
 ## Step 2: The gate ("What are you?")
 - [ ] Full-screen question shown first, before anything else, in a funny tone.
