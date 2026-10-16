@@ -1,0 +1,418 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (approved in the Step 0 mockup) ----------
+   Layered near-blacks, one hot pink for actions and highlights, Oswald
+   display over DM Sans text, square corners, grain under every surface. */
+
+@theme {
+  --color-bg: #09090a;
+  --color-surface: #131315;
+  --color-surface-2: #1c1c1f;
+  --color-surface-3: #26262a;
+  --color-ink: #f5f5f2;
+  --color-muted: #a8a8a3;
+  --color-accent: #ff2e93;
+  --color-on-accent: #09090a;
+
+  /* Four type steps do all the work. */
+  --text-shout: clamp(56px, 17.5vw, 176px);
+  --text-shout--line-height: 0.88;
+  --text-shout--letter-spacing: -0.02em;
+  --text-title: clamp(34px, 9.2vw, 64px);
+  --text-title--line-height: 1.05;
+  --text-title--letter-spacing: -0.01em;
+  /* Mid-size lines: results, quoted doubts, card titles. */
+  --text-statement: clamp(26px, 3vw, 36px);
+  --text-statement--line-height: 1.15;
+  --text-body: clamp(18px, 1.4vw, 20px);
+  --text-body--line-height: 1.5;
+  --text-note: 14px;
+  --text-note--line-height: 1.4;
+
+  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-press: cubic-bezier(0.23, 1, 0.32, 1);
+  /* Strong ease-in-out for things moving on screen (Emil Kowalski's animate skill). */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Fonts come from next/font (see layout.tsx). */
+@theme inline {
+  --font-display: var(--font-oswald), "Arial Narrow", sans-serif;
+  --font-text: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+  /* Side margin used by every section. Never narrower than the iPhone notch in
+     landscape (the page draws edge to edge: viewport-fit=cover). */
+  --margin: max(clamp(16px, 2.2vw, 32px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  /* Film grain, layered under surfaces so type stays crisp. */
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Adds the grain on top of a surface colour: `bg-surface grain`. */
+@utility grain {
+  background-image: var(--grain);
+}
+
+/* ---------- Base ---------- */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--grain), var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-text);
+    font-size: var(--text-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a,
+  button {
+    touch-action: manipulation;
+  }
+
+  /* Controls, not content: a long press shouldn't select a button's label.
+     Page text stays selectable. */
+  button {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+}
+
+/* ---------- Shared pieces ---------- */
+
+@layer components {
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Masked line: wrap each headline line as .mask > .rise so it can rise from its baseline. */
+  .mask {
+    display: block;
+    overflow: hidden;
+    padding-block-end: 0.04em;
+  }
+  .mask > .rise {
+    display: block;
+  }
+
+  /* Highlight: pink highlighter band behind the words, type knocked out to black. */
+  .hl-band {
+    padding-inline: 0.18em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    /* A flat band; written as a gradient only so its width can be animated. */
+    /* 78% tall, centred: covers the capitals without reaching into the line above. */
+    background: linear-gradient(var(--color-accent), var(--color-accent)) no-repeat 0 55% / 100% 78%;
+    color: var(--color-on-accent);
+  }
+
+  /* Highlight: hollow letters. Falls back to solid letters where strokes are unsupported. */
+  @supports (-webkit-text-stroke: 1px black) {
+    .hl-outline {
+      color: transparent;
+      -webkit-text-stroke: max(2px, 0.03em) var(--color-ink);
+    }
+  }
+
+  /* Highlight: hand-drawn loop around the words, drawn behind the letters. */
+  .hl-circle {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    isolation: isolate;
+  }
+  .hl-circle svg {
+    position: absolute;
+    z-index: -1;
+    inset-inline-start: -8%;
+    inset-block-start: -12%;
+    width: 116%;
+    height: 128%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .hl-circle path {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- Entrance motion ----------
+   Hidden starting states apply only while JavaScript runs (the `data-js` attribute is
+   set in layout.tsx) and only until the surrounding <Reveal> plays. With
+   reduced motion everything is simply shown. */
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-js] [data-reveal]:not(.is-revealed) .rise {
+    transform: translateY(108%);
+  }
+  [data-js] [data-reveal]:not(.is-revealed) .fade {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  [data-js] [data-reveal]:not(.is-revealed) .hl-band {
+    background-size: 0% 78%;
+    color: var(--color-ink);
+  }
+  [data-js] [data-reveal]:not(.is-revealed) .hl-circle path {
+    stroke-dashoffset: 1;
+  }
+
+  [data-reveal].is-revealed .rise {
+    transition: transform 900ms var(--ease-reveal) var(--d, 0ms);
+  }
+  [data-reveal].is-revealed .fade {
+    transition:
+      opacity 700ms ease var(--d, 0ms),
+      transform 700ms var(--ease-reveal) var(--d, 0ms);
+  }
+  [data-reveal].is-revealed .hl-band {
+    transition:
+      background-size 700ms var(--ease-reveal) var(--band-delay, 1000ms),
+      color 160ms ease calc(var(--band-delay, 1000ms) + 220ms);
+  }
+  [data-reveal].is-revealed .hl-circle path {
+    transition: stroke-dashoffset 900ms var(--ease-reveal) var(--circle-delay, 300ms);
+  }
+}
+
+/* Above the fold (<Reveal immediate>): the same entrance, played by CSS from the
+   first paint instead of waiting for JavaScript. It also replays whenever the
+   block is shown again (the gate after "Pick again", the page after the gate). */
+@media (prefers-reduced-motion: no-preference) {
+  [data-js] [data-reveal-now] .rise {
+    animation: reveal-rise 900ms var(--ease-reveal) var(--d, 0ms) both;
+  }
+  [data-js] [data-reveal-now] .fade {
+    animation: reveal-fade 700ms var(--ease-reveal) var(--d, 0ms) both;
+  }
+  [data-js] [data-reveal-now] .hl-band {
+    animation: reveal-band 700ms var(--ease-reveal) var(--band-delay, 1000ms) both;
+  }
+  [data-js] [data-reveal-now] .hl-circle path {
+    animation: reveal-circle 900ms var(--ease-reveal) var(--circle-delay, 300ms) both;
+  }
+}
+@keyframes reveal-rise {
+  from {
+    transform: translateY(108%);
+  }
+}
+@keyframes reveal-fade {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+@keyframes reveal-band {
+  from {
+    background-size: 0% 78%;
+    color: var(--color-ink);
+  }
+  30% {
+    color: var(--color-ink);
+  }
+  45% {
+    color: var(--color-on-accent);
+  }
+}
+@keyframes reveal-circle {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* ---------- Gate or page ----------
+   Decided by attributes the boot script in layout.tsx sets before first paint,
+   so a returning visitor never sees the gate flash. Unlayered on purpose, so
+   these win over the layout utilities on the same elements. */
+
+[data-js]:not([data-goal]) .page-root {
+  display: none;
+}
+[data-goal] .gate,
+html:not([data-js]) .gate {
+  display: none;
+}
+
+/* Programmatic focus target after the gate; no ring for a non-interactive landmark. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* The gate leaves a beat after the pick, so the chosen card's flash is seen. */
+.gate {
+  transition:
+    opacity 320ms ease 180ms,
+    transform 320ms var(--ease-reveal) 180ms;
+}
+.gate.is-leaving {
+  opacity: 0;
+  transform: translateY(-24px);
+}
+
+/* The picked creature does a quick bounce. */
+.choice.is-picked .choice-art svg {
+  animation: pick-bounce 360ms var(--ease-press);
+}
+@keyframes pick-bounce {
+  40% {
+    transform: scale(1.12) rotate(-4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate.is-leaving {
+    transform: none;
+  }
+  .choice.is-picked .choice-art svg {
+    animation: none;
+  }
+}
+
+/* ---------- Goal-specific content ----------
+   Both versions are in the HTML; the answer on <html data-goal> hides the
+   other one before first paint. Without an answer (no JavaScript), show "lose". */
+
+[data-goal="lose"] [data-for-goal="gain"],
+[data-goal="gain"] [data-for-goal="lose"],
+html:not([data-goal]) [data-for-goal="gain"] {
+  display: none;
+}
+
+/* ---------- Hero backdrop ----------
+   The photos fade into the page from top to bottom. */
+
+.hero-backdrop {
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.45) 45%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.45) 45%, transparent 100%);
+}
+
+/* ---------- Scroll strip ("More results") ---------- */
+
+.scroll-strip {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-surface-3) transparent;
+  overscroll-behavior-x: contain;
+}
+@media (hover: hover) and (pointer: fine) {
+  .scroll-strip {
+    cursor: grab;
+  }
+}
+/* While a mouse drags it: no snapping (it would fight the drag), grabbing hand. */
+.scroll-strip[data-dragging] {
+  scroll-snap-type: none;
+  cursor: grabbing;
+}
+
+/* ---------- The goose ----------
+   A layer over the page that never takes the pointer, so whatever is under
+   the goose (the Apply button) stays clickable. Clipped so the goose walking
+   in from off-screen never makes the page scroll sideways. No reduced-motion
+   variant on purpose: CLAUDE.md says the goose plays for everyone. */
+
+.goose-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  overflow: clip;
+  pointer-events: none;
+}
+.goose {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0; /* shown once it is placed off-screen, so it never flashes at the corner */
+}
+.goose-face {
+  position: absolute;
+  inset: 0;
+}
+.goose-pose {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 100%;
+}
+.goose-buff,
+.goose-burst {
+  opacity: 0;
+}
+
+/* Waddle: legs swing in turn, the body rocks over them. */
+.goose-leg {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+.goose-bob {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.goose.is-walking .goose-leg-a,
+.goose.is-running .goose-leg-a {
+  animation: goose-step 360ms var(--ease-in-out) infinite alternate;
+}
+.goose.is-walking .goose-leg-b,
+.goose.is-running .goose-leg-b {
+  animation: goose-step 360ms var(--ease-in-out) infinite alternate-reverse;
+}
+.goose.is-walking .goose-bob,
+.goose.is-running .goose-bob {
+  animation: goose-waddle 360ms var(--ease-in-out) infinite alternate;
+}
+.goose.is-running .goose-leg-a,
+.goose.is-running .goose-leg-b,
+.goose.is-running .goose-bob {
+  animation-duration: 140ms;
+}
+@keyframes goose-step {
+  from {
+    transform: rotate(-22deg);
+  }
+  to {
+    transform: rotate(22deg);
+  }
+}
+@keyframes goose-waddle {
+  from {
+    transform: rotate(-4deg) translateY(0);
+  }
+  to {
+    transform: rotate(4deg) translateY(-3%);
+  }
+}

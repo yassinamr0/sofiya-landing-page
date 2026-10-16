@@ -3,7 +3,7 @@
 ## What this is
 A lead-generation landing page for fitness coach **Sofiya Validovna** (150k+ Instagram followers). Visitors arrive from Instagram, mostly on phones. They already know her story.
 
-**A lead = someone who completes the Typeform.** Every "Apply now" button goes to the Typeform (keep the URL in one env var, `NEXT_PUBLIC_TYPEFORM_URL`). Nothing else on the page is a conversion.
+**A lead = someone who completes the Typeform.** Every "Apply now" button goes to the Typeform (keep the URL in one env var, `NEXT_PUBLIC_APPLY_FORM_URL`; the form tool may be Typeform, Tally or Google Forms). Nothing else on the page is a conversion.
 
 After the Typeform, Sofiya's team reaches out on Instagram chat (not a call). Pricing and duration are discussed there, never on the page.
 
@@ -51,7 +51,7 @@ An animated goose comes in from the side of the screen, waddles to the **Apply n
 - **Accessibility basics:** real buttons and links, visible focus, alt text, readable contrast, tap targets of at least 44px. Buttons should give clear press feedback; hover effects only on devices that hover.
 - **Arabic is possible later, not now.** Do not build it yet, but structure the code so it can be added without a rewrite: all copy in one content file or i18n layer, and use logical CSS properties (margin-inline, padding-inline, text-align: start) rather than left/right.
 - **Placeholders are honest.** Anything fake (photos, names, numbers, quotes, chat conversations) must be visibly marked and easy to swap. Never present invented results as real.
-- **Analytics:** track gate choice, video play, each Apply click (which button), and Typeform opens. Keep it simple and privacy-respecting.
+- **Analytics:** track gate choice, video play, each Apply click (which button), and form opens. Keep it simple and privacy-respecting.
 
 ## Suggested stack (change it if you have a better reason)
 Next.js (App Router) + TypeScript + Tailwind, Framer Motion or GSAP for motion, deployed on Vercel. Self-host or use a video host with HLS for the intro videos. Keep content in a single typed content file.
