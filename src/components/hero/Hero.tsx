@@ -60,7 +60,10 @@ export function Hero({ content, applyLabel }: Props) {
             style={{ "--d": "90ms" } as CSSProperties}
           >
             <p className="mb-7 max-w-[34ch]">{content.choose.body}</p>
-            <ApplyButton source="hero" label={applyLabel} />
+            {/* The goose walks to this button and pecks it (see components/goose). */}
+            <span data-goose-target className="inline-block">
+              <ApplyButton source="hero" label={applyLabel} />
+            </span>
           </div>
         </Reveal>
       </div>

@@ -31,6 +31,8 @@
 
   --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-press: cubic-bezier(0.23, 1, 0.32, 1);
+  /* Strong ease-in-out for things moving on screen (Emil Kowalski's animate skill). */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 /* Fonts come from next/font (see layout.tsx). */
@@ -280,4 +282,83 @@ html:not([data-goal]) [data-for-goal="gain"] {
 .scroll-strip[data-dragging] {
   scroll-snap-type: none;
   cursor: grabbing;
+}
+
+/* ---------- The goose ----------
+   A layer over the page that never takes the pointer, so whatever is under
+   the goose (the Apply button) stays clickable. Clipped so the goose walking
+   in from off-screen never makes the page scroll sideways. No reduced-motion
+   variant on purpose: CLAUDE.md says the goose plays for everyone. */
+
+.goose-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  overflow: clip;
+  pointer-events: none;
+}
+.goose {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0; /* shown once it is placed off-screen, so it never flashes at the corner */
+}
+.goose-face {
+  position: absolute;
+  inset: 0;
+}
+.goose-pose {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 100%;
+}
+.goose-buff,
+.goose-burst {
+  opacity: 0;
+}
+
+/* Waddle: legs swing in turn, the body rocks over them. */
+.goose-leg {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+.goose-bob {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.goose.is-walking .goose-leg-a,
+.goose.is-running .goose-leg-a {
+  animation: goose-step 360ms var(--ease-in-out) infinite alternate;
+}
+.goose.is-walking .goose-leg-b,
+.goose.is-running .goose-leg-b {
+  animation: goose-step 360ms var(--ease-in-out) infinite alternate-reverse;
+}
+.goose.is-walking .goose-bob,
+.goose.is-running .goose-bob {
+  animation: goose-waddle 360ms var(--ease-in-out) infinite alternate;
+}
+.goose.is-running .goose-leg-a,
+.goose.is-running .goose-leg-b,
+.goose.is-running .goose-bob {
+  animation-duration: 140ms;
+}
+@keyframes goose-step {
+  from {
+    transform: rotate(-22deg);
+  }
+  to {
+    transform: rotate(22deg);
+  }
+}
+@keyframes goose-waddle {
+  from {
+    transform: rotate(-4deg) translateY(0);
+  }
+  to {
+    transform: rotate(4deg) translateY(-3%);
+  }
 }

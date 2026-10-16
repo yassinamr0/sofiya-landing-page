@@ -1,4 +1,5 @@
 import { Gate } from "@/components/gate/Gate";
+import { GooseLoader } from "@/components/goose/GooseLoader";
 import { Backdrop } from "@/components/hero/Backdrop";
 import { Hero } from "@/components/hero/Hero";
 import { Chats } from "@/components/sections/Chats";
@@ -38,6 +39,7 @@ export default function Home() {
           <FinalCta content={content.finalCta} applyLabel={content.apply.label} />
         </main>
         <SiteFooter brand={content.brand} content={content.footer} />
+        <GooseLoader />
       </div>
     </>
   );

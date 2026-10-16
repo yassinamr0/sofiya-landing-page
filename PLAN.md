@@ -36,9 +36,9 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 - [x] Final CTA and footer. No FAQ section.
 
 ## Step 6: The goose
-- [ ] Propose the animation technique and get approval.
-- [ ] Build: enters from the side, waddles to the Apply button, pecks it, turns muscular, runs off.
-- [ ] Always plays for every visitor (no reduced-motion fallback, no hiding it), once per visit, after the gate. Works at phone and desktop sizes. The button stays clickable the whole time.
+- [x] Propose the animation technique and get approval.
+- [x] Build: enters from the side, waddles to the Apply button, pecks it, turns muscular, runs off.
+- [x] Always plays for every visitor (no reduced-motion fallback, no hiding it), once per visit, after the gate. Works at phone and desktop sizes. The button stays clickable the whole time.
 
 ## Step 7: Quality pass
 - [ ] Mobile test on a real phone, including the Instagram in-app browser and iOS Safari.
