@@ -136,5 +136,9 @@ export type Content = {
 
   finalCta: { title: Rich; note: string };
 
-  footer: { name: string };
+  footer: {
+    name: string;
+    /** Shown next to the Instagram link while its URL is still a placeholder. */
+    instagramPlaceholderNote: string;
+  };
 };

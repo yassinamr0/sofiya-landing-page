@@ -271,5 +271,5 @@ export const en: Content = {
     note: "Takes 2 minutes. We'll reach out on Instagram.",
   },
 
-  footer: { name: "Sofiya Validovna" },
+  footer: { name: "Sofiya Validovna", instagramPlaceholderNote: "(placeholder link)" },
 };

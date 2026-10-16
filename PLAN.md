@@ -30,10 +30,10 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 - [x] "This is not a template" icon cards.
 
 ## Step 5: Proof and filters
-- [ ] Results: testimonial cards plus the horizontal scroll strip of portrait photos (swipe on mobile, scroll or drag on desktop).
-- [ ] Objections section with Apply button.
-- [ ] For you / Not for you cards with check and X icons.
-- [ ] Final CTA and footer. No FAQ section.
+- [x] Results: testimonial cards plus the horizontal scroll strip of portrait photos (swipe on mobile, scroll or drag on desktop).
+- [x] Objections section with Apply button.
+- [x] For you / Not for you cards with check and X icons.
+- [x] Final CTA and footer. No FAQ section.
 
 ## Step 6: The goose
 - [ ] Propose the animation technique and get approval.
