@@ -48,8 +48,6 @@ export function WalkingGoose() {
           <circle cx="88" cy="27" r="12" fill={WHITE} stroke={LINE} strokeWidth="2" />
           <path d="M97 24L115 31L97 35Z" fill={ORANGE} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
           <circle cx="91" cy="24" r="2.4" fill={INK} />
-          {/* The cheeky, slightly menacing brow every goose has. */}
-          <path d="M85 17L95 21" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
         </g>
 
         <ellipse cx="56" cy="94" rx="36" ry="22" fill={WHITE} stroke={LINE} strokeWidth="2" />
@@ -59,42 +57,79 @@ export function WalkingGoose() {
   );
 }
 
+const COAT = "#33333D";
+const COAT_EDGE = "#6E6E7C";
+
+function BowTie() {
+  return (
+    <g>
+      <path d="M66 74L77 79L66 85ZM88 74L77 79L88 85Z" fill={PINK} stroke={LINE} strokeWidth="1.5" strokeLinejoin="round" />
+      <circle cx="77" cy="79" r="3" fill={PINK} stroke={LINE} strokeWidth="1.5" />
+    </g>
+  );
+}
+
 /**
  * The plain goose standing still, as a group on the 120 x 140 canvas facing
  * right, for the section moments. Class hooks let each moment move a part:
  * gf-whole (everything, turns at the feet), gf-head (neck and head, turns at
- * the neck's base), gf-eye, gf-wing and gf-leg-front.
+ * the neck's base), gf-eye, gf-wing, gf-leg-front and gf-leg-back.
+ * outfit: "tux" (tailcoat, shirt front, bow tie) or "bowtie".
  */
-export function GooseFigure({ headExtra, bodyExtra }: { headExtra?: ReactNode; bodyExtra?: ReactNode }) {
+export function GooseFigure({
+  outfit,
+  headExtra,
+  bodyExtra,
+}: {
+  outfit?: "tux" | "bowtie";
+  headExtra?: ReactNode;
+  bodyExtra?: ReactNode;
+}) {
+  const tux = outfit === "tux";
   return (
     <g className="gf-whole">
       <Leg x={60} className="gf-leg-back" />
       <Leg x={48} className="gf-leg-front" />
-      <path d="M24 86L7 70L22 96Z" fill={WHITE} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
+      {tux ? (
+        // Coat tails.
+        <path d="M30 98L10 126L26 118L30 128L42 106Z" fill={COAT} stroke={COAT_EDGE} strokeWidth="2" strokeLinejoin="round" />
+      ) : (
+        <path d="M24 86L7 70L22 96Z" fill={WHITE} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
+      )}
       <g className="gf-head">
         <path d="M74 88C90 70 70 52 84 32" stroke={LINE} strokeWidth="17" strokeLinecap="round" fill="none" />
         <path d="M74 88C90 70 70 52 84 32" stroke={WHITE} strokeWidth="13" strokeLinecap="round" fill="none" />
         <circle cx="88" cy="27" r="12" fill={WHITE} stroke={LINE} strokeWidth="2" />
         <path d="M97 24L115 31L97 35Z" fill={ORANGE} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
         <circle className="gf-eye" cx="91" cy="24" r="2.4" fill={INK} />
-        <path d="M85 17L95 21" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
         {headExtra}
       </g>
-      <ellipse cx="56" cy="94" rx="36" ry="22" fill={WHITE} stroke={LINE} strokeWidth="2" />
+      <ellipse
+        cx="56"
+        cy="94"
+        rx="36"
+        ry="22"
+        fill={tux ? COAT : WHITE}
+        stroke={tux ? COAT_EDGE : LINE}
+        strokeWidth="2"
+      />
+      {/* Shirt front. */}
+      {tux && <path d="M72 76C86 80 92 90 92 96C90 104 84 109 76 112C80 100 80 88 72 76Z" fill={WHITE} />}
       <path
         className="gf-wing"
         d="M34 88C44 76 66 78 74 90C64 100 46 102 34 88Z"
-        fill={WING}
-        stroke={LINE}
+        fill={tux ? COAT : WING}
+        stroke={tux ? COAT_EDGE : LINE}
         strokeWidth="2"
         strokeLinejoin="round"
       />
+      {outfit && <BowTie />}
       {bodyExtra}
     </g>
   );
 }
 
-function Arm({ side }: { side: "front" | "back" }) {
+export function Arm({ side }: { side: "front" | "back" }) {
   // The back arm is the front arm mirrored around the body's centre line (x = 60).
   const m = (x: number) => (side === "front" ? x : 120 - x);
   return (

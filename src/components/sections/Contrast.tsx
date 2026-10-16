@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Content } from "@/content";
+import { TailorGoose } from "../goose/moments/Moments";
 import { Reveal } from "../Reveal";
 import { SectionTitle, sectionHighlightTiming } from "./SectionTitle";
 
@@ -7,7 +8,7 @@ import { SectionTitle, sectionHighlightTiming } from "./SectionTitle";
  * "Most coaches change how you look. We change how you live."
  * Most programs vs Here, side by side at every width: the comparison is the point.
  */
-export function Contrast({ content }: { content: Content["contrast"] }) {
+export function Contrast({ content, planLabel }: { content: Content["contrast"]; planLabel: string }) {
   const columns = "grid grid-cols-2 gap-x-[clamp(8px,1.6vw,24px)]";
 
   return (
@@ -25,6 +26,12 @@ export function Contrast({ content }: { content: Content["contrast"] }) {
           <div aria-hidden="true" className={`fade ${columns} pb-3 font-bold`}>
             <span className="text-muted">{content.theirsLabel}</span>
             <span className="text-accent">{content.oursLabel}</span>
+          </div>
+          {/* The tailor stands right above "A plan tailored for you". On phones it walks in from the first column. */}
+          <div className={columns}>
+            <div className="col-span-2 min-[640px]:col-span-1 min-[640px]:col-start-2 min-[640px]:max-w-[440px] min-[640px]:justify-self-end">
+              <TailorGoose planLabel={planLabel} />
+            </div>
           </div>
           <ul className="m-0 grid list-none gap-[clamp(8px,1vw,12px)] p-0">
             {content.rows.map((row, i) => (

@@ -26,6 +26,8 @@ type Props = {
   /** Positioned ancestor the goose layer covers; coordinates are relative to it. */
   root: HTMLElement;
   onDone: () => void;
+  /** Tapping the goose: play the whole run again. */
+  onReplay: () => void;
 };
 
 /**
@@ -37,7 +39,7 @@ type Props = {
  * Only transform and opacity animate. The layer ignores the pointer, so the
  * button stays clickable throughout.
  */
-export default function Goose({ target, root, onDone }: Props) {
+export default function Goose({ target, root, onDone, onReplay }: Props) {
   const gooseRef = useRef<HTMLDivElement>(null);
   const faceRef = useRef<HTMLDivElement>(null);
 
@@ -161,20 +163,56 @@ export default function Goose({ target, root, onDone }: Props) {
       );
       if (cancelled) return;
 
-      // 4. Double flex.
+      // 4. Flex routine: double biceps, a side flex, then a "most muscular" crunch.
+      const S = BUFF_SCALE;
+      const armFront = buff.querySelector<SVGGElement>(".goose-arm-front")!;
+      const armBack = buff.querySelector<SVGGElement>(".goose-arm-back")!;
+      // Each arm turns at its shoulder (front arm at 20% of its box, back arm mirrored).
+      for (const [arm, x] of [[armFront, "20%"], [armBack, "80%"]] as const) {
+        arm.style.transformBox = "fill-box";
+        arm.style.transformOrigin = `${x} 83%`;
+      }
+      const pose = (front: number, back: number, body: string, duration = 240) =>
+        Promise.all([
+          play(armFront, [{ transform: `rotate(${front}deg)` }], { duration, easing: EASE_OUT }),
+          play(armBack, [{ transform: `rotate(${back}deg)` }], { duration, easing: EASE_OUT }),
+          play(buff, [{ transform: body }], { duration, easing: EASE_OUT }),
+        ]);
+
       await play(
         buff,
         [
-          { transform: `scale(${BUFF_SCALE})`, easing: EASE_IN_OUT },
-          { transform: `scale(${BUFF_SCALE + 0.07})`, offset: 0.25, easing: EASE_IN_OUT },
-          { transform: `scale(${BUFF_SCALE})`, offset: 0.5, easing: EASE_IN_OUT },
-          { transform: `scale(${BUFF_SCALE + 0.07})`, offset: 0.75, easing: EASE_IN_OUT },
-          { transform: `scale(${BUFF_SCALE})` },
+          { transform: `scale(${S})`, easing: EASE_IN_OUT },
+          { transform: `scale(${S * 1.07})`, offset: 0.3, easing: EASE_IN_OUT },
+          { transform: `scale(${S})`, offset: 0.55, easing: EASE_IN_OUT },
+          { transform: `scale(${S * 1.07})`, offset: 0.8, easing: EASE_IN_OUT },
+          { transform: `scale(${S})` },
         ],
-        { duration: 600, easing: "linear" },
+        { duration: 560, easing: "linear" },
       );
       if (cancelled) return;
-      await wait(140);
+      await pose(16, -110, `scale(${S * 0.9}, ${S})`);
+      await play(
+        buff,
+        [
+          { transform: `scale(${S * 0.9}, ${S})` },
+          { transform: `scale(${S * 0.94}, ${S * 1.04})` },
+          { transform: `scale(${S * 0.9}, ${S})` },
+        ],
+        { duration: 360, easing: EASE_IN_OUT },
+      );
+      if (cancelled) return;
+      const crunch = `scale(${S * 1.08}, ${S * 0.94})`;
+      await pose(125, -125, crunch);
+      await play(
+        buff,
+        [-2, 2, -2, 2, 0].map((x) => ({ transform: `translateX(${x}px) ${crunch}` })),
+        { duration: 340, easing: "linear" },
+      );
+      if (cancelled) return;
+      await pose(0, 0, `scale(${S})`, 160);
+      if (cancelled) return;
+      await wait(100);
 
       // 5. Turns around and runs off the way it came.
       facing(false);
@@ -186,8 +224,11 @@ export default function Goose({ target, root, onDone }: Props) {
       if (!cancelled) onDone();
     };
 
-    // A layout change mid-run would leave the goose pecking thin air: end it instead.
+    // A real layout change mid-run would leave the goose pecking thin air: end it instead.
+    // Height-only resizes (a phone's address bar showing or hiding as you scroll) don't count.
+    const startWidth = document.documentElement.clientWidth;
     const stop = () => {
+      if (document.documentElement.clientWidth === startWidth) return;
       cancelled = true;
       running.forEach((a) => a.cancel());
       onDone();
@@ -204,7 +245,7 @@ export default function Goose({ target, root, onDone }: Props) {
 
   return (
     <div className="goose-layer" aria-hidden="true">
-      <div ref={gooseRef} className="goose">
+      <div ref={gooseRef} className="goose" onClick={onReplay}>
         <div ref={faceRef} className="goose-face">
           <Burst />
           <BuffGoose />

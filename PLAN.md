@@ -39,7 +39,7 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 - [x] Propose the animation technique and get approval.
 - [x] Build: enters from the side, waddles to the Apply button, pecks it, turns muscular, runs off.
 - [x] Always plays for every visitor (no reduced-motion fallback, no hiding it), every time the page is opened, after the gate. Works at phone and desktop sizes. The button stays clickable the whole time.
-- [x] Section moments: chats (tumbleweed), not a template (tailor), objections (pull-ups), not for you (quick-fix kick), final CTA (holds the door).
+- [x] Section moments: contrast (tux tailor), chats (tumbleweed; buff goose texting on the Here chat), not a template (dinner photo), objections (pull-ups and flex), not for you (quick-fix kick), final CTA (holds the door). Tap any goose to replay.
 
 ## Step 7: Quality pass
 - [ ] Mobile test on a real phone, including the Instagram in-app browser and iOS Safari. (Emulated touch run done; real-device checklist in PLACEHOLDERS.md.)

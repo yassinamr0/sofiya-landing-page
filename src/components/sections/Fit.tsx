@@ -49,7 +49,10 @@ export function Fit({ content, pillLabel }: { content: Content["fit"]; pillLabel
             className="fade p-[clamp(24px,3.5vw,48px)] min-[900px]:col-span-5"
             style={{ "--d": "120ms" } as CSSProperties}
           >
-            <h3 className="m-0 font-display text-statement font-bold text-muted uppercase">{content.notForYou.title}</h3>
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="m-0 shrink-0 font-display text-statement font-bold text-muted uppercase">{content.notForYou.title}</h3>
+              <KickGoose pillLabel={pillLabel} />
+            </div>
             <ul className="m-0 mt-6 grid list-none gap-4 p-0 text-muted">
               {content.notForYou.items.map((item) => (
                 <li key={item} className="flex gap-3.5">
@@ -58,7 +61,6 @@ export function Fit({ content, pillLabel }: { content: Content["fit"]; pillLabel
                 </li>
               ))}
             </ul>
-            <KickGoose pillLabel={pillLabel} />
           </div>
         </Reveal>
       </div>

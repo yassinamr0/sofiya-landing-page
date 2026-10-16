@@ -21,7 +21,9 @@ type Stage = { target: HTMLElement; root: HTMLElement };
  */
 export function GooseLoader() {
   const [stage, setStage] = useState<Stage | null>(null);
+  const [run, setRun] = useState(0);
   const finish = useCallback(() => setStage(null), []);
+  const replay = useCallback(() => setRun((n) => n + 1), []);
 
   useEffect(() => {
     if (playedThisPageView) return;
@@ -57,5 +59,5 @@ export function GooseLoader() {
     return () => observer.disconnect();
   }, []);
 
-  return stage ? <Goose target={stage.target} root={stage.root} onDone={finish} /> : null;
+  return stage ? <Goose key={run} target={stage.target} root={stage.root} onDone={finish} onReplay={replay} /> : null;
 }

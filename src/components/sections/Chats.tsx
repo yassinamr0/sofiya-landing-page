@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Content, Goal } from "@/content";
-import { LonelyGoose } from "../goose/moments/Moments";
+import { LonelyGoose, TextingGoose } from "../goose/moments/Moments";
 import { Reveal } from "../Reveal";
 import { ChatScreen } from "./ChatScreen";
 import { SectionTitle, sectionHighlightTiming } from "./SectionTitle";
@@ -25,9 +25,10 @@ export function Chats({ content }: { content: Content["chats"] }) {
           </Reveal>
           {/* Both versions are in the HTML; <html data-goal> hides the other one. */}
           {GOALS.map((goal) => (
-            <div key={goal} data-for-goal={goal}>
+            // Extra room above on phones: the texting goose sits on this card's top edge.
+            <div key={goal} data-for-goal={goal} className="mt-[72px] min-[900px]:mt-0">
               <Reveal threshold={0.25} className="h-full">
-                <ChatScreen chat={content.ours[goal]} tone="ours" />
+                <ChatScreen chat={content.ours[goal]} tone="ours" decoration={<TextingGoose />} />
               </Reveal>
             </div>
           ))}

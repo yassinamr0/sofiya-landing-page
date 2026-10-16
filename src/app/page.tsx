@@ -30,9 +30,9 @@ export default function Home() {
         />
         <main id="page" tabIndex={-1} className="relative">
           <Hero content={content.hero} applyLabel={content.apply.label} />
-          <Contrast content={content.contrast} />
+          <Contrast content={content.contrast} planLabel={content.goose.tailorPlan} />
           <Chats content={content.chats} />
-          <NotTemplate content={content.notTemplate} planLabel={content.goose.tailorPlan} />
+          <NotTemplate content={content.notTemplate} />
           <Results content={content.results} />
           <Objections content={content.objections} applyLabel={content.apply.label} />
           <Fit content={content.fit} pillLabel={content.goose.quickFix} />
