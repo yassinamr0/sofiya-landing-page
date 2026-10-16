@@ -37,11 +37,13 @@ export function Gate({ content }: { content: Content["gate"] }) {
   }
 
   return (
+    // role="main": while the gate shows, it is the page's main content (the real <main> is hidden).
     <section
+      role="main"
       aria-labelledby="gate-title"
       className={`gate flex min-h-svh flex-col justify-center px-(--margin) py-8 ${picked ? "is-leaving" : ""}`}
     >
-      <Reveal className="flex w-full flex-col gap-[clamp(28px,5vh,56px)]">
+      <Reveal immediate className="flex w-full flex-col gap-[clamp(28px,5vh,56px)]">
         <div className="text-center">
           <h1 id="gate-title" className="font-display text-shout font-bold uppercase">
             <MaskedLines lines={content.title} lineClassName="min-[900px]:inline-block min-[900px]:align-top" />

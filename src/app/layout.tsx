@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Oswald } from "next/font/google";
+import { AnalyticsScript } from "@/components/AnalyticsScript";
 import { getContent } from "@/content";
 import { GOAL_STORAGE_KEY } from "@/lib/goal";
 import "./globals.css";
@@ -29,7 +30,9 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  // The page is dark-only, so one status-bar colour fits every visitor.
   themeColor: "#09090a",
+  colorScheme: "dark",
 };
 
 // Runs before first paint:
@@ -64,7 +67,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <AnalyticsScript />
+      </body>
     </html>
   );
 }

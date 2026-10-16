@@ -41,11 +41,11 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 - [x] Always plays for every visitor (no reduced-motion fallback, no hiding it), once per visit, after the gate. Works at phone and desktop sizes. The button stays clickable the whole time.
 
 ## Step 7: Quality pass
-- [ ] Mobile test on a real phone, including the Instagram in-app browser and iOS Safari.
-- [ ] Speed: images, video, JS size, Lighthouse mobile.
-- [ ] Accessibility basics from CLAUDE.md.
-- [ ] Analytics events wired and checked.
-- [ ] Every placeholder listed in one place so it can be swapped for real photos, videos, names, results and quotes.
+- [ ] Mobile test on a real phone, including the Instagram in-app browser and iOS Safari. (Emulated touch run done; real-device checklist in PLACEHOLDERS.md.)
+- [x] Speed: images, video, JS size, Lighthouse mobile.
+- [x] Accessibility basics from CLAUDE.md.
+- [x] Analytics events wired and checked.
+- [x] Every placeholder listed in one place so it can be swapped for real photos, videos, names, results and quotes.
 
 ## Later (not now)
 - Arabic version with a right-to-left layout.

@@ -22,7 +22,7 @@ export default function Home() {
 
       {/* Everything after the gate. */}
       <div className="page-root relative">
-        <Backdrop note={content.hero.backdropNote} />
+        <Backdrop photos={content.hero.backdropPhotos} note={content.hero.backdropNote} />
         <SiteHeader
           brand={content.brand}
           applyLabel={content.apply.label}

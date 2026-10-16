@@ -24,8 +24,18 @@ export type Rich = ReadonlyArray<string | { text: string; mark: Mark }>;
 /** A headline whose line breaks are set by hand, one `Rich` per line. */
 export type Lines = ReadonlyArray<Rich>;
 
-/** Anything fake (photos, names, numbers, quotes) is marked so it is easy to find and swap. */
-export type Placeholder = { placeholder: true };
+/**
+ * Anything fake (photos, names, numbers, quotes) is marked so it is easy to find
+ * and swap. Set it to false (or remove it) once the real thing is in.
+ */
+export type Placeholder = { placeholder?: boolean };
+
+/**
+ * A photo: put the file in public/media/ and give its path, e.g.
+ * { src: "/media/results/anna.jpg", alt: "Anna before and after six months" }.
+ * Next.js resizes and compresses it automatically.
+ */
+export type Photo = { src: string; alt: string };
 
 export type ChatSender = "client" | "coach";
 
@@ -80,6 +90,8 @@ export type Content = {
     shout: Lines;
     punch: Rich;
     backdropNote: string;
+    /** Photos of Sofiya for the faded backdrop (decorative, so no alt text). Empty: placeholder tiles. */
+    backdropPhotos: ReadonlyArray<string>;
     playLabel: string;
     /** Shown after tapping play while a goal has no real video yet. */
     videoPendingNote: string;
@@ -112,15 +124,17 @@ export type Content = {
     title: Rich;
     testimonials: ReadonlyArray<
       {
-        media: "photo" | "video";
-        mediaLabel: string;
+        media:
+          | { kind: "photo"; label: string; photo?: Photo }
+          /** A direct MP4 link; the poster is a still image shown before it plays. */
+          | { kind: "video"; label: string; video?: { src: string; poster?: string } };
         name: string;
         result: string;
         quote: string;
       } & Placeholder
     >;
     moreTitle: string;
-    more: ReadonlyArray<{ label: string } & Placeholder>;
+    more: ReadonlyArray<{ label: string; photo?: Photo } & Placeholder>;
   };
 
   objections: {

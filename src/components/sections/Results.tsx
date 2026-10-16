@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { Content } from "@/content";
 import { Reveal } from "../Reveal";
@@ -24,18 +25,7 @@ export function Results({ content }: { content: Content["results"] }) {
                 className="fade flex flex-col grain bg-surface"
                 style={{ "--d": `${i * 100}ms` } as CSSProperties}
               >
-                <div className="grid aspect-[4/5] place-items-center grain bg-surface-2 p-4 text-center text-note text-muted">
-                  {t.media === "video" ? (
-                    <span className="grid justify-items-center gap-3">
-                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-8">
-                        <path d="M6 4v16l14-8z" />
-                      </svg>
-                      {t.mediaLabel}
-                    </span>
-                  ) : (
-                    t.mediaLabel
-                  )}
-                </div>
+                <TestimonialMedia media={t.media} />
                 <div className="flex flex-col gap-2.5 p-[clamp(20px,2.4vw,28px)]">
                   <p className="m-0 font-bold">{t.name}</p>
                   <p className="m-0 font-display text-statement font-semibold text-accent uppercase">{t.result}</p>
@@ -53,9 +43,20 @@ export function Results({ content }: { content: Content["results"] }) {
               {content.more.map((photo, i) => (
                 <div
                   key={i}
-                  className="grid aspect-[3/4] w-[clamp(200px,58vw,280px)] shrink-0 snap-start place-items-center grain bg-surface p-4 text-center text-note text-muted"
+                  className="relative grid aspect-[3/4] w-[clamp(200px,58vw,280px)] shrink-0 snap-start place-items-center overflow-hidden grain bg-surface p-4 text-center text-note text-muted"
                 >
-                  {photo.label}
+                  {photo.photo ? (
+                    <Image
+                      src={photo.photo.src}
+                      alt={photo.photo.alt}
+                      fill
+                      sizes="280px"
+                      draggable={false}
+                      className="object-cover"
+                    />
+                  ) : (
+                    photo.label
+                  )}
                 </div>
               ))}
             </ScrollStrip>
@@ -63,5 +64,55 @@ export function Results({ content }: { content: Content["results"] }) {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+/** A real before/after photo or video once supplied, otherwise its labelled placeholder. */
+function TestimonialMedia({ media }: { media: Content["results"]["testimonials"][number]["media"] }) {
+  const frame = "relative grid aspect-[4/5] place-items-center overflow-hidden grain bg-surface-2 p-4 text-center text-note text-muted";
+
+  if (media.kind === "photo" && media.photo) {
+    return (
+      <div className={frame}>
+        <Image
+          src={media.photo.src}
+          alt={media.photo.alt}
+          fill
+          sizes="(min-width: 900px) 30vw, 100vw"
+          className="object-cover"
+        />
+      </div>
+    );
+  }
+
+  if (media.kind === "video" && media.video) {
+    // Never autoplays; loads nothing until played.
+    return (
+      <div className={frame}>
+        <video
+          src={media.video.src}
+          poster={media.video.poster}
+          controls
+          playsInline
+          preload="none"
+          className="absolute inset-0 h-full w-full bg-black object-cover"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className={frame}>
+      {media.kind === "video" ? (
+        <span className="grid justify-items-center gap-3">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-8">
+            <path d="M6 4v16l14-8z" />
+          </svg>
+          {media.label}
+        </span>
+      ) : (
+        media.label
+      )}
+    </div>
   );
 }

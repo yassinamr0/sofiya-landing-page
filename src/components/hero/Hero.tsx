@@ -21,7 +21,7 @@ export function Hero({ content, applyLabel }: Props) {
       className="relative px-(--margin) pt-[clamp(28px,6vh,72px)] pb-[clamp(96px,12vw,200px)]"
     >
       <div className="mx-auto max-w-[1376px]">
-        <Reveal className="text-center">
+        <Reveal immediate className="text-center">
           <h1 id="hero-title" className="font-display uppercase">
             <span className="block text-shout font-bold">
               <MaskedLines lines={content.shout} />

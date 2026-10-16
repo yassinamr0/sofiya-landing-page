@@ -4,6 +4,7 @@ import type { Content } from "./types";
 // Anything in [brackets] or marked `placeholder: true` is fake and must be
 // replaced with real client material before launch.
 
+// PLACEHOLDER: each "More results" photo; add photo: { src: "/media/results/more-1.jpg", alt: "…" }.
 const clientPhoto = { label: "[Client photo]", placeholder: true } as const;
 
 export const en: Content = {
@@ -43,6 +44,8 @@ export const en: Content = {
     shout: [["Six months"], ["from now,"]],
     punch: [{ text: "you won't recognize yourself.", mark: "band" }],
     backdropNote: "Backdrop photos: placeholder",
+    // PLACEHOLDER: photos of Sofiya, e.g. ["/media/backdrop/1.jpg", "/media/backdrop/2.jpg", …]; 6 or 12 fill the grid.
+    backdropPhotos: [],
     playLabel: "Play the intro video",
     videoPendingNote: "The real intro video plays here.",
     // PLACEHOLDER: when the videos are hosted, add their links, e.g.
@@ -186,24 +189,24 @@ export const en: Content = {
     title: ["Results, ", { text: "not promises.", mark: "circle" }],
     testimonials: [
       {
-        media: "photo",
-        mediaLabel: "[BEFORE / AFTER PHOTO]",
+        // PLACEHOLDER: add photo: { src: "/media/results/<name>.jpg", alt: "<name> before and after" }
+        media: { kind: "photo", label: "[BEFORE / AFTER PHOTO]" },
         name: "[Client first name]",
         result: "[X kg in Y weeks]",
         quote: "[Real testimonial, in the client's own words]",
         placeholder: true,
       },
       {
-        media: "photo",
-        mediaLabel: "[BEFORE / AFTER PHOTO]",
+        // PLACEHOLDER: add photo: { src: "/media/results/<name>.jpg", alt: "<name> before and after" }
+        media: { kind: "photo", label: "[BEFORE / AFTER PHOTO]" },
         name: "[Client first name]",
         result: "[X kg in Y weeks]",
         quote: "[Real testimonial, in the client's own words]",
         placeholder: true,
       },
       {
-        media: "video",
-        mediaLabel: "[CLIENT VIDEO TESTIMONIAL]",
+        // PLACEHOLDER: add video: { src: "https://<host>/<name>.mp4", poster: "/media/results/<name>-poster.jpg" }
+        media: { kind: "video", label: "[CLIENT VIDEO TESTIMONIAL]" },
         name: "[Client first name]",
         result: "[X kg in Y weeks]",
         quote: "[Real testimonial, in the client's own words]",
