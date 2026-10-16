@@ -20,9 +20,9 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 - [x] Placeholder illustrations clearly marked. The entrance and the choice should feel fun but fast.
 
 ## Step 3: The hero
-- [ ] Headline above the intro video, video centered and large, faded photo backdrop behind.
-- [ ] Goal-based video swap (calf = weight-loss video, broomstick = muscle-gain video; placeholders for now), poster frame, tap-to-play, no autoplay with sound.
-- [ ] "You don't have to choose us." block and the Apply button under the video.
+- [x] Headline above the intro video, video centered and large, faded photo backdrop behind.
+- [x] Goal-based video swap (calf = weight-loss video, broomstick = muscle-gain video; placeholders for now), poster frame, tap-to-play, no autoplay with sound.
+- [x] "You don't have to choose us." block and the Apply button under the video.
 
 ## Step 4: Middle sections
 - [ ] Contrast section.

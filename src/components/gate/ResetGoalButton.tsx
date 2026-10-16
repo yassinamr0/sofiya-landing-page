@@ -11,7 +11,7 @@ export function ResetGoalButton({ label }: { label: string }) {
         resetGoal();
         window.scrollTo(0, 0);
       }}
-      className="inline-flex min-h-11 items-center px-2.5 text-note text-muted transition-colors duration-150 hover:text-ink"
+      className="hidden min-h-11 items-center px-2.5 text-note whitespace-nowrap text-muted transition-colors duration-150 hover:text-ink min-[640px]:inline-flex"
     >
       {label}
     </button>

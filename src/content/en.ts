@@ -44,9 +44,11 @@ export const en: Content = {
     punch: [{ text: "you won't recognize yourself.", mark: "band" }],
     backdropNote: "Backdrop photos: placeholder",
     playLabel: "Play the intro video",
+    videoPendingNote: "The real intro video plays here.",
+    // PLACEHOLDER: add src ("/media/intro-lose.mp4") and poster ("/media/intro-lose.jpg") when the videos exist.
     video: {
-      lose: { caption: "Placeholder: weight-loss intro video", placeholder: true },
-      gain: { caption: "Placeholder: muscle-gain intro video", placeholder: true },
+      lose: { placeholderLabel: "Placeholder: weight-loss intro video" },
+      gain: { placeholderLabel: "Placeholder: muscle-gain intro video" },
     },
     choose: {
       title: ["You don't have to ", { text: "choose us.", mark: "circle" }],

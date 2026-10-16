@@ -241,3 +241,21 @@ html:not([data-js]) .gate {
     animation: none;
   }
 }
+
+/* ---------- Goal-specific content ----------
+   Both versions are in the HTML; the answer on <html data-goal> hides the
+   other one before first paint. Without an answer (no JavaScript), show "lose". */
+
+[data-goal="lose"] [data-for-goal="gain"],
+[data-goal="gain"] [data-for-goal="lose"],
+html:not([data-goal]) [data-for-goal="gain"] {
+  display: none;
+}
+
+/* ---------- Hero backdrop ----------
+   The photos fade into the page from top to bottom. */
+
+.hero-backdrop {
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.45) 45%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.45) 45%, transparent 100%);
+}

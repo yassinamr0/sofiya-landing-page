@@ -30,7 +30,7 @@ export function ApplyButton({ source, label, size = "default", className = "" }:
     <a
       href={APPLY_FORM_URL}
       onClick={handleClick}
-      className={`inline-flex items-center justify-center bg-accent font-text text-body font-bold text-on-accent transition-[transform,background-color] duration-150 ease-press hover:bg-ink active:scale-97 ${sizes[size]} ${className}`}
+      className={`inline-flex items-center justify-center whitespace-nowrap bg-accent font-text text-body font-bold text-on-accent transition-[transform,background-color] duration-150 ease-press hover:bg-ink active:scale-97 ${sizes[size]} ${className}`}
     >
       {label}
     </a>

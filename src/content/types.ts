@@ -40,6 +40,16 @@ export type Chat = {
   footnote: string;
 };
 
+/**
+ * An intro video. Until `src` is set, the frame shows `placeholderLabel` and the
+ * goal's drawing. Put files in public/media/ (H.264 MP4 + a JPG poster frame).
+ */
+export type HeroVideo = {
+  src?: string;
+  poster?: string;
+  placeholderLabel: string;
+};
+
 export type FeatureIcon = "chat" | "calendar" | "sliders" | "layers" | "phone";
 
 export type Content = {
@@ -69,7 +79,9 @@ export type Content = {
     punch: Rich;
     backdropNote: string;
     playLabel: string;
-    video: Record<Goal, { caption: string } & Placeholder>;
+    /** Shown after tapping play while a goal has no real video yet. */
+    videoPendingNote: string;
+    video: Record<Goal, HeroVideo>;
     choose: { title: Rich; body: string };
   };
 
