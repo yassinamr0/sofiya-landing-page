@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
   className?: string;
+  /** e.g. `--band-delay` / `--circle-delay` to retime highlights in this block. */
+  style?: CSSProperties;
   /** How much of the block must be on screen before it plays. */
   threshold?: number;
 };
@@ -15,7 +17,7 @@ type Props = {
  * globals.css only apply while JavaScript is running, so content is never
  * left invisible.
  */
-export function Reveal({ children, className = "", threshold = 0.3 }: Props) {
+export function Reveal({ children, className = "", style, threshold = 0.3 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
 
@@ -36,7 +38,7 @@ export function Reveal({ children, className = "", threshold = 0.3 }: Props) {
   }, [threshold]);
 
   return (
-    <div ref={ref} data-reveal="" className={`${className} ${revealed ? "is-revealed" : ""}`}>
+    <div ref={ref} data-reveal="" style={style} className={`${className} ${revealed ? "is-revealed" : ""}`}>
       {children}
     </div>
   );

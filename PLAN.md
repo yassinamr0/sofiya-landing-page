@@ -25,9 +25,9 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 - [x] "You don't have to choose us." block and the Apply button under the video.
 
 ## Step 4: Middle sections
-- [ ] Contrast section.
-- [ ] Chats section: two illustrated chats, the "Here" one follows the goal. Labelled illustrative.
-- [ ] "This is not a template" icon cards.
+- [x] Contrast section.
+- [x] Chats section: two illustrated chats, the "Here" one follows the goal. Labelled illustrative.
+- [x] "This is not a template" icon cards.
 
 ## Step 5: Proof and filters
 - [ ] Results: testimonial cards plus the horizontal scroll strip of portrait photos (swipe on mobile, scroll or drag on desktop).

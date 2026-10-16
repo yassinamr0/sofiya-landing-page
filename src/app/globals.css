@@ -115,7 +115,8 @@
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
     /* A flat band; written as a gradient only so its width can be animated. */
-    background: linear-gradient(var(--color-accent), var(--color-accent)) no-repeat 0 0 / 100% 100%;
+    /* 78% tall, centred: covers the capitals without reaching into the line above. */
+    background: linear-gradient(var(--color-accent), var(--color-accent)) no-repeat 0 55% / 100% 78%;
     color: var(--color-on-accent);
   }
 
@@ -169,7 +170,7 @@
     transform: translateY(24px);
   }
   [data-js] [data-reveal]:not(.is-revealed) .hl-band {
-    background-size: 0% 100%;
+    background-size: 0% 78%;
     color: var(--color-ink);
   }
   [data-js] [data-reveal]:not(.is-revealed) .hl-circle path {
