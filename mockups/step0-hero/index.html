@@ -178,13 +178,38 @@ a { text-decoration: none; }
   font-size: var(--s-xl); line-height: .88; letter-spacing: -.02em; font-weight: 700;
 }
 .punch {
-  display: block; margin-block-start: .5em;
-  font-size: var(--s-l); line-height: 1.02; font-weight: 500; letter-spacing: -.005em;
+  display: block; margin-block-start: .4em;
+  font-size: var(--s-l); line-height: 1.22; font-weight: 600; letter-spacing: -.005em;
 }
 
 /* Masked line reveal: each line rises from behind its own baseline */
 .mask { display: block; overflow: hidden; padding-block-end: .04em; }
 .mask > span { display: block; }
+.punch.mask { padding-block: .12em; }
+
+/* ---------- Highlights: each one acts out what the words say ---------- */
+
+/* Highlighter band: wipes in behind the line, the type knocks out to black */
+.slab {
+  display: inline;
+  padding-inline: .18em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 0 / 100% 100%; /* taste-skill-ignore: solid highlighter band, wiped in with background-size */
+  color: var(--on-accent);
+}
+
+/* Hollow letters: the question is still open */
+@supports (-webkit-text-stroke: 1px black) {
+  .outline { color: transparent; -webkit-text-stroke: max(2px, .03em) var(--ink); }
+}
+
+/* Hand-drawn loop around the words, drawn on when they scroll into view */
+.circled { position: relative; display: inline-block; white-space: nowrap; isolation: isolate; }
+.circled svg {
+  position: absolute; z-index: -1; pointer-events: none; overflow: visible;
+  left: -8%; top: -12%; width: 116%; height: 128%;
+}
+.circled path { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
 
 .video {
   position: relative;
@@ -221,7 +246,7 @@ a { text-decoration: none; }
   margin-block-start: clamp(64px, 9vw, 150px);
   display: grid; gap: 24px;
 }
-.choose h2 { font-size: var(--s-l); line-height: .98; letter-spacing: -.01em; font-weight: 700; }
+.choose h2 { font-size: var(--s-l); line-height: 1.1; letter-spacing: -.01em; font-weight: 700; }
 .choose p { margin: 0 0 28px; max-width: 34ch; }
 
 /* ---------- Mockup footer ---------- */
@@ -247,10 +272,20 @@ a { text-decoration: none; }
   opacity: 1; transform: none;
   transition: opacity 700ms ease var(--d, 0ms), transform 700ms var(--ease-out) var(--d, 0ms);
 }
+.js .slab { background-size: 0% 100%; color: var(--ink); }
+.is-revealed .slab {
+  background-size: 100% 100%; color: var(--on-accent);
+  transition: background-size 700ms var(--ease-out) 1000ms, color 160ms ease 1220ms;
+}
+.js .circled path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.is-inview .circled path { stroke-dashoffset: 0; transition: stroke-dashoffset 900ms var(--ease-out) 200ms; }
 
 @media (prefers-reduced-motion: reduce) {
   .js .rise, .js .fade { transform: none; }
   .is-revealed .rise, .is-revealed .fade { transition: opacity 200ms ease; }
+  .js .slab { background-size: 100% 100%; color: var(--on-accent); }
+  .is-revealed .slab { transition: none; }
+  .js .circled path { stroke-dashoffset: 0; }
   .gate { transition: opacity 200ms ease; }
   .gate.is-leaving { transform: none; }
 }
@@ -337,7 +372,7 @@ a { text-decoration: none; }
   <div class="gate-head">
     <h1 id="gate-title" class="display gate-title">
       <span class="mask"><span class="rise">What are</span></span>
-      <span class="mask"><span class="rise" style="--d:110ms">you?</span></span>
+      <span class="mask"><span class="rise outline" style="--d:110ms">you?</span></span>
     </h1>
     <p class="gate-sub fade" style="--d:260ms">Be honest. Pick one.</p>
   </div>
@@ -380,7 +415,7 @@ a { text-decoration: none; }
             <span class="mask"><span class="rise">Six months</span></span>
             <span class="mask"><span class="rise" style="--d:110ms">from now,</span></span>
           </span>
-          <span class="punch mask"><span class="rise" style="--d:240ms">you won't recognize yourself.</span></span>
+          <span class="punch mask"><span class="rise" style="--d:240ms"><span class="slab">you won't recognize yourself.</span></span></span>
         </h1>
 
         <figure class="video fade" style="--d:420ms">
@@ -393,7 +428,7 @@ a { text-decoration: none; }
         </figure>
 
         <div class="choose">
-          <h2 class="display fade">You don't have to choose us.</h2>
+          <h2 class="display fade">You don't have to <span class="circled">choose us.<svg viewBox="0 0 200 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M34 16C86 2 172 6 191 40C206 72 142 97 92 95C36 93 3 75 8 48C12 24 54 10 118 9"/></svg></span></h2>
           <div class="choose-body fade" style="--d:90ms">
             <p>You have a hundred other options. Keep scrolling, keep comparing, keep waiting. Or take a real step.</p>
             <a class="btn" id="apply" href="#apply" data-apply="hero">Apply now</a>
@@ -479,6 +514,19 @@ a { text-decoration: none; }
     track('video_play', { goal: document.documentElement.dataset.goal });
     page.querySelector('[data-video-msg]').hidden = false;
   });
+
+  // Draw the loop around "choose us." once it scrolls into view
+  var choose = page.querySelector('.choose');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { choose.classList.add('is-inview'); io.disconnect(); }
+      });
+    }, { threshold: 0.6 });
+    io.observe(choose);
+  } else {
+    choose.classList.add('is-inview');
+  }
 
   // Dev helpers: ?reset clears the saved goal, ?goal=lose|gain jumps past the gate
   var params = new URLSearchParams(location.search);
