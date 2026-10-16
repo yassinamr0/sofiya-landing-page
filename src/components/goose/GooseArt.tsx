@@ -4,13 +4,15 @@
 // What makes it a goose and not a duck: the long S-shaped neck standing high
 // above a big body, the long orange bill, the upturned tail and the tall stance.
 
-const WHITE = "#F5F5F2";
-const LINE = "#2A2A2E";
-const WING = "#D9D9D2";
-const MUSCLE = "#B9B9B2";
-const ORANGE = "#FF8A1F";
-const INK = "#09090A";
-const PINK = "#FF2E93";
+import type { ReactNode } from "react";
+
+export const WHITE = "#F5F5F2";
+export const LINE = "#2A2A2E";
+export const WING = "#D9D9D2";
+export const MUSCLE = "#B9B9B2";
+export const ORANGE = "#FF8A1F";
+export const INK = "#09090A";
+export const PINK = "#FF2E93";
 
 /** Where the neck turns when it pecks (canvas units). */
 export const NECK_PIVOT = { x: 74, y: 86 };
@@ -54,6 +56,41 @@ export function WalkingGoose() {
         <path d="M34 88C44 76 66 78 74 90C64 100 46 102 34 88Z" fill={WING} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
       </g>
     </svg>
+  );
+}
+
+/**
+ * The plain goose standing still, as a group on the 120 x 140 canvas facing
+ * right, for the section moments. Class hooks let each moment move a part:
+ * gf-whole (everything, turns at the feet), gf-head (neck and head, turns at
+ * the neck's base), gf-eye, gf-wing and gf-leg-front.
+ */
+export function GooseFigure({ headExtra, bodyExtra }: { headExtra?: ReactNode; bodyExtra?: ReactNode }) {
+  return (
+    <g className="gf-whole">
+      <Leg x={60} className="gf-leg-back" />
+      <Leg x={48} className="gf-leg-front" />
+      <path d="M24 86L7 70L22 96Z" fill={WHITE} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
+      <g className="gf-head">
+        <path d="M74 88C90 70 70 52 84 32" stroke={LINE} strokeWidth="17" strokeLinecap="round" fill="none" />
+        <path d="M74 88C90 70 70 52 84 32" stroke={WHITE} strokeWidth="13" strokeLinecap="round" fill="none" />
+        <circle cx="88" cy="27" r="12" fill={WHITE} stroke={LINE} strokeWidth="2" />
+        <path d="M97 24L115 31L97 35Z" fill={ORANGE} stroke={LINE} strokeWidth="2" strokeLinejoin="round" />
+        <circle className="gf-eye" cx="91" cy="24" r="2.4" fill={INK} />
+        <path d="M85 17L95 21" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
+        {headExtra}
+      </g>
+      <ellipse cx="56" cy="94" rx="36" ry="22" fill={WHITE} stroke={LINE} strokeWidth="2" />
+      <path
+        className="gf-wing"
+        d="M34 88C44 76 66 78 74 90C64 100 46 102 34 88Z"
+        fill={WING}
+        stroke={LINE}
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      {bodyExtra}
+    </g>
   );
 }
 

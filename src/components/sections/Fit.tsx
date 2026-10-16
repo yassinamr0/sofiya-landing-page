@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Content } from "@/content";
+import { KickGoose } from "../goose/moments/Moments";
 import { Reveal } from "../Reveal";
 import { SectionTitle, sectionHighlightTiming } from "./SectionTitle";
 
@@ -23,9 +24,9 @@ function Cross() {
  * "Who this is for. And who it isn't." The two lists look nothing alike:
  * a solid pink card with checks, and a quiet muted one with crosses.
  */
-export function Fit({ content }: { content: Content["fit"] }) {
+export function Fit({ content, pillLabel }: { content: Content["fit"]; pillLabel: string }) {
   return (
-    <section aria-labelledby="fit-title" className="px-(--margin) py-[clamp(96px,12vw,200px)]">
+    <section aria-labelledby="fit-title" className="overflow-x-clip px-(--margin) py-[clamp(96px,12vw,200px)]">
       <div className="mx-auto max-w-[1376px]">
         <Reveal style={sectionHighlightTiming}>
           <SectionTitle id="fit-title" value={content.title} />
@@ -57,6 +58,7 @@ export function Fit({ content }: { content: Content["fit"] }) {
                 </li>
               ))}
             </ul>
+            <KickGoose pillLabel={pillLabel} />
           </div>
         </Reveal>
       </div>

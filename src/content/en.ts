@@ -70,7 +70,7 @@ export const en: Content = {
     rows: [
       {
         theirs: "A template plan, copied from a PDF",
-        ours: "A plan built for you, changed whenever your life changes",
+        ours: "A plan tailored for you, changed whenever your life changes",
       },
       {
         theirs: "Silence for days",
@@ -236,6 +236,8 @@ export const en: Content = {
         doubt: "“I'm starting from zero.”",
         answer: "Then the plan starts exactly where you are, and changes as you do.",
         proof: "[Client who said the same: X kg in Y weeks]",
+        // The goose does pull-ups on the edge of this card and says this.
+        gooseLine: "So did I.",
       },
       {
         doubt: "“I don't know if it will work for me.”",
@@ -267,6 +269,12 @@ export const en: Content = {
         "You expect results without effort",
       ],
     },
+  },
+
+  // Words inside the goose's section moments (see components/goose/moments).
+  goose: {
+    tailorPlan: "Your plan",
+    quickFix: "Quick fix",
   },
 
   finalCta: {

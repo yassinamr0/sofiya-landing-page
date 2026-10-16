@@ -139,7 +139,7 @@ export type Content = {
 
   objections: {
     title: Rich;
-    items: ReadonlyArray<{ doubt: string; answer: string; proof: string }>;
+    items: ReadonlyArray<{ doubt: string; answer: string; proof: string; gooseLine?: string }>;
   };
 
   fit: {
@@ -147,6 +147,9 @@ export type Content = {
     forYou: { title: string; items: ReadonlyArray<string> };
     notForYou: { title: string; items: ReadonlyArray<string> };
   };
+
+  /** Words drawn inside the goose's section moments. */
+  goose: { tailorPlan: string; quickFix: string };
 
   finalCta: { title: Rich; note: string };
 

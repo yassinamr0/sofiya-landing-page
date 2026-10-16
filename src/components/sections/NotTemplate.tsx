@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Content } from "@/content";
+import { TailorGoose } from "../goose/moments/Moments";
 import { Reveal } from "../Reveal";
 import { FeatureIcon } from "./FeatureIcon";
 import { SectionTitle, sectionHighlightTiming } from "./SectionTitle";
@@ -8,7 +9,7 @@ import { SectionTitle, sectionHighlightTiming } from "./SectionTitle";
  * "This is not a template." The headline stays in view on wide screens while
  * the five parts of the program scroll past beside it.
  */
-export function NotTemplate({ content }: { content: Content["notTemplate"] }) {
+export function NotTemplate({ content, planLabel }: { content: Content["notTemplate"]; planLabel: string }) {
   return (
     <section
       aria-labelledby="template-title"
@@ -23,6 +24,7 @@ export function NotTemplate({ content }: { content: Content["notTemplate"] }) {
           <p className="fade mt-5 mb-0 max-w-[36ch]" style={{ "--d": "90ms" } as CSSProperties}>
             {content.intro}
           </p>
+          <TailorGoose planLabel={planLabel} />
         </Reveal>
 
         <Reveal threshold={0.15} className="min-[900px]:col-span-7">

@@ -416,3 +416,339 @@ html:not([data-goal]) [data-for-goal="gain"] {
     transform: rotate(4deg) translateY(-3%);
   }
 }
+
+/* ---------- Goose moments ----------
+   One small scene per section (components/goose/moments). Every part's
+   animation is declared up front and held paused on its first frame until
+   <GooseScene> adds .is-playing; without JavaScript they simply play. Like the
+   hero goose there is no reduced-motion variant: CLAUDE.md says the goose plays
+   for everyone. Transform and opacity only. */
+
+.goose-scene svg {
+  overflow: visible;
+  pointer-events: none;
+}
+[data-js] .goose-scene:not(.is-playing),
+[data-js] .goose-scene:not(.is-playing) * {
+  animation-play-state: paused !important;
+}
+
+/* Parts of <GooseFigure>, turning where a real goose would. */
+.gf-whole {
+  transform-box: fill-box;
+  transform-origin: 45% 100%;
+}
+.gf-head {
+  transform-box: fill-box;
+  transform-origin: 18% 90%;
+}
+.gf-eye {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.gf-wing {
+  transform-box: fill-box;
+  transform-origin: 0% 40%;
+}
+
+/* Chats: waits, slumps against the wall, nods off; a tumbleweed rolls by. */
+.lonely {
+  container-type: inline-size;
+}
+.lonely-goose {
+  animation: moment-pop-up 500ms var(--ease-reveal) both;
+}
+.lonely-goose .gf-whole {
+  animation: lonely-slump 2600ms var(--ease-in-out) 700ms both;
+}
+.lonely-goose .gf-head {
+  animation: lonely-droop 1400ms var(--ease-in-out) 1700ms both;
+}
+.lonely-goose .gf-eye {
+  animation: lonely-sleep 300ms ease 2900ms both;
+}
+.lonely-web {
+  animation: moment-fade-in 900ms ease 3100ms both;
+}
+.lonely-zzz {
+  animation: lonely-zzz 1600ms ease-in-out 3200ms infinite both;
+}
+.tumbleweed {
+  animation: tumble-across 2600ms linear 1900ms both;
+}
+.tumbleweed svg {
+  animation:
+    tumble-spin 2600ms linear 1900ms both,
+    tumble-bounce 650ms ease-in-out 1900ms 4 alternate both;
+}
+@keyframes lonely-slump {
+  to {
+    transform: rotate(-24deg) translateY(24%);
+  }
+}
+@keyframes lonely-droop {
+  to {
+    transform: rotate(40deg);
+  }
+}
+@keyframes lonely-sleep {
+  to {
+    transform: scaleY(0.15);
+  }
+}
+@keyframes lonely-zzz {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  30%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+@keyframes tumble-across {
+  to {
+    transform: translateX(calc(-100cqw - 60px));
+  }
+}
+@keyframes tumble-spin {
+  to {
+    transform: rotate(-1080deg);
+  }
+}
+@keyframes tumble-bounce {
+  to {
+    translate: 0 -14px;
+  }
+}
+
+/* Not a template: measures the plan, ticks it, the tape snaps back. */
+.tailor svg {
+  animation: moment-pop-up 500ms var(--ease-reveal) both;
+}
+.tailor-tape {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  animation: tailor-tape 2600ms linear 500ms both;
+}
+.tailor .gf-head {
+  animation: tailor-nod 2600ms var(--ease-in-out) 500ms both;
+}
+.tailor-check {
+  stroke-dasharray: 1;
+  animation: draw-line 450ms var(--ease-press) 1900ms both;
+}
+@keyframes tailor-tape {
+  0% {
+    transform: scaleX(0);
+    animation-timing-function: var(--ease-reveal);
+  }
+  35%,
+  84% {
+    transform: scaleX(1);
+    animation-timing-function: var(--ease-in-out);
+  }
+  91%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+@keyframes tailor-nod {
+  0%,
+  50%,
+  64%,
+  90%,
+  100% {
+    transform: rotate(0);
+  }
+  57%,
+  71% {
+    transform: rotate(3deg);
+  }
+  93% {
+    transform: rotate(-10deg);
+  }
+}
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Starting from zero: three pull-ups on the card's edge, then its line. */
+.pullup-body {
+  animation: pull-ups 2700ms var(--ease-in-out) 300ms both;
+}
+.pullup-bubble {
+  transform-origin: 0% 100%;
+  animation: bubble-pop 380ms var(--ease-press) 3000ms both;
+}
+@keyframes pull-ups {
+  0%,
+  33%,
+  66% {
+    transform: translateY(32px);
+  }
+  16%,
+  50%,
+  84%,
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes bubble-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+/* Not for you: the quick-fix pill rolls up and gets kicked away. */
+.kick svg {
+  animation: moment-pop-up 500ms var(--ease-reveal) both;
+}
+.kick-pill {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: pill-kicked 3200ms linear 400ms both;
+}
+.kick .gf-head {
+  animation: kick-look 3200ms var(--ease-in-out) 400ms both;
+}
+.kick .gf-leg-front {
+  animation: kick-leg 3200ms var(--ease-in-out) 400ms both;
+}
+@keyframes pill-kicked {
+  0% {
+    opacity: 0;
+    transform: translateX(150px) rotate(14deg);
+    animation-timing-function: var(--ease-reveal);
+  }
+  8% {
+    opacity: 1;
+  }
+  32% {
+    transform: translateX(0) rotate(-4deg);
+  }
+  38%,
+  56% {
+    transform: translateX(0) rotate(0);
+    animation-timing-function: cubic-bezier(0.2, 0.6, 0.4, 1);
+  }
+  82% {
+    opacity: 1;
+    transform: translate(240px, -200px) rotate(620deg);
+  }
+  90%,
+  100% {
+    opacity: 0;
+    transform: translate(270px, -220px) rotate(700deg);
+  }
+}
+@keyframes kick-look {
+  0%,
+  36%,
+  62%,
+  100% {
+    transform: rotate(0);
+  }
+  42%,
+  54% {
+    transform: rotate(26deg);
+  }
+  70% {
+    transform: rotate(-8deg);
+  }
+}
+@keyframes kick-leg {
+  0%,
+  52%,
+  64%,
+  100% {
+    transform: rotate(0);
+  }
+  57% {
+    transform: rotate(-72deg);
+  }
+}
+
+/* Final call: holds the Apply button open like a door and bows. */
+.door {
+  perspective: 700px;
+}
+.door > a {
+  position: relative;
+  z-index: 1;
+  transform-origin: 0% 50%;
+  /* No fill, so the button's own press feedback works again afterwards. */
+  animation: door-swing 3200ms var(--ease-in-out) 700ms;
+}
+.door-goose {
+  animation: door-goose-in 500ms var(--ease-reveal) both;
+}
+.door-goose .gf-whole {
+  animation: door-bow 3200ms var(--ease-in-out) 700ms both;
+}
+.door-goose .gf-wing {
+  animation: door-wing 3200ms var(--ease-in-out) 700ms both;
+}
+@keyframes door-swing {
+  0%,
+  100% {
+    transform: none;
+  }
+  18%,
+  80% {
+    transform: rotateY(-42deg);
+  }
+}
+@keyframes door-goose-in {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+}
+@keyframes door-bow {
+  0%,
+  18%,
+  86%,
+  100% {
+    transform: rotate(0);
+  }
+  32%,
+  74% {
+    transform: rotate(20deg);
+  }
+}
+@keyframes door-wing {
+  0%,
+  16%,
+  86%,
+  100% {
+    transform: rotate(0);
+  }
+  28%,
+  76% {
+    transform: rotate(-38deg);
+  }
+}
+
+/* Shared entrances. */
+@keyframes moment-pop-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+@keyframes moment-fade-in {
+  from {
+    opacity: 0;
+  }
+}

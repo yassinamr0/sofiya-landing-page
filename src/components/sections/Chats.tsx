@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Content, Goal } from "@/content";
+import { LonelyGoose } from "../goose/moments/Moments";
 import { Reveal } from "../Reveal";
 import { ChatScreen } from "./ChatScreen";
 import { SectionTitle, sectionHighlightTiming } from "./SectionTitle";
@@ -20,7 +21,7 @@ export function Chats({ content }: { content: Content["chats"] }) {
 
         <div className="mt-[clamp(40px,5vw,72px)] grid items-stretch gap-[clamp(16px,2vw,24px)] min-[900px]:grid-cols-2">
           <Reveal threshold={0.25} className="h-full">
-            <ChatScreen chat={content.theirs} tone="theirs" />
+            <ChatScreen chat={content.theirs} tone="theirs" decoration={<LonelyGoose />} />
           </Reveal>
           {/* Both versions are in the HTML; <html data-goal> hides the other one. */}
           {GOALS.map((goal) => (

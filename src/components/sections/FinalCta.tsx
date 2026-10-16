@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Content } from "@/content";
 import { ApplyButton } from "../ApplyButton";
+import { DoorGoose } from "../goose/moments/Moments";
 import { Reveal } from "../Reveal";
 import { RichText } from "../RichText";
 import { sectionHighlightTiming } from "./SectionTitle";
@@ -25,7 +26,9 @@ export function FinalCta({ content, applyLabel }: Props) {
           <RichText value={content.title} />
         </h2>
         <div className="fade mt-[clamp(32px,4vw,56px)] grid justify-items-center gap-3.5" style={{ "--d": "120ms" } as CSSProperties}>
-          <ApplyButton source="final" label={applyLabel} />
+          <DoorGoose>
+            <ApplyButton source="final" label={applyLabel} />
+          </DoorGoose>
           <p className="m-0 text-note text-muted">{content.note}</p>
         </div>
       </Reveal>

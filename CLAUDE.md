@@ -44,6 +44,7 @@ An animated goose comes in from the side of the screen, waddles to the **Apply n
 - It should trigger after the gate is passed and the hero is visible, every time the page is opened.
 - It must find the button's real on-screen position (mobile and desktop differ) and not block or cover the button for long. The button stays clickable the whole time.
 - The muscular transformation needs to be funny and readable at phone size. Propose the technique (hand-built SVG with GSAP, Rive, Lottie or a sprite sheet) and explain the pick before building. Keep the animation light enough not to hurt page speed.
+- Section moments (small, once per page view, when each scrolls into view, never covering text or buttons): Chats, the goose waits by the unanswered chat, slumps and nods off as a tumbleweed rolls by; Not a template, it measures "your plan" with a tailor's tape; Objections, it does pull-ups on the "starting from zero" card and says "So did I."; Not for you, it kicks away a "quick fix" pill; Final CTA, it holds the Apply button open like a door and bows.
 
 ## Constraints
 - **Mobile first.** Most visitors come from the Instagram in-app browser on phones. Design and test at 390px wide first. Videos must not autoplay with sound; handle iOS Safari and the Instagram in-app browser.

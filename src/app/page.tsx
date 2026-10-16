@@ -32,10 +32,10 @@ export default function Home() {
           <Hero content={content.hero} applyLabel={content.apply.label} />
           <Contrast content={content.contrast} />
           <Chats content={content.chats} />
-          <NotTemplate content={content.notTemplate} />
+          <NotTemplate content={content.notTemplate} planLabel={content.goose.tailorPlan} />
           <Results content={content.results} />
           <Objections content={content.objections} applyLabel={content.apply.label} />
-          <Fit content={content.fit} />
+          <Fit content={content.fit} pillLabel={content.goose.quickFix} />
           <FinalCta content={content.finalCta} applyLabel={content.apply.label} />
         </main>
         <SiteFooter brand={content.brand} content={content.footer} />

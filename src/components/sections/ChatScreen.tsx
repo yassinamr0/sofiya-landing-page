@@ -1,10 +1,12 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Chat, ChatItem } from "@/content";
 
 type Props = {
   chat: Chat;
   /** "ours" is Sofiya's chat: pink coach bubbles and a pink avatar. */
   tone: "theirs" | "ours";
+  /** Drawn over the bottom of the screen (the goose's moment). */
+  decoration?: ReactNode;
 };
 
 const STEP_MS = 70;
@@ -14,11 +16,11 @@ const STEP_MS = 70;
  * round avatar), so it is the one place the page's square corners don't apply.
  * Messages pop in one by one when the surrounding <Reveal> plays.
  */
-export function ChatScreen({ chat, tone }: Props) {
+export function ChatScreen({ chat, tone, decoration }: Props) {
   const ours = tone === "ours";
 
   return (
-    <figure data-ui className="m-0 flex h-full flex-col grain bg-surface">
+    <figure data-ui className="relative m-0 flex h-full flex-col grain bg-surface">
       <figcaption className="flex items-center gap-3 bg-surface-2 px-5 py-3.5">
         <span
           aria-hidden="true"
@@ -49,6 +51,7 @@ export function ChatScreen({ chat, tone }: Props) {
       >
         {chat.footnote}
       </p>
+      {decoration}
     </figure>
   );
 }

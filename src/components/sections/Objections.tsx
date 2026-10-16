@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Content } from "@/content";
 import { ApplyButton } from "../ApplyButton";
+import { PullUpGoose } from "../goose/moments/Moments";
 import { Reveal } from "../Reveal";
 import { SectionTitle, sectionHighlightTiming } from "./SectionTitle";
 
@@ -24,6 +25,7 @@ export function Objections({ content, applyLabel }: Props) {
         <ul className="m-0 mt-[clamp(40px,5vw,72px)] grid list-none gap-[clamp(8px,1vw,12px)] p-0">
           {content.items.map((item) => (
             <li key={item.doubt}>
+              {item.gooseLine && <PullUpGoose line={item.gooseLine} />}
               <Reveal
                 threshold={0.4}
                 className="grid gap-x-[clamp(24px,4vw,64px)] gap-y-4 grain bg-surface-2 p-[clamp(24px,3.5vw,48px)] min-[900px]:grid-cols-12"
