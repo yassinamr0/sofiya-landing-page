@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Oswald } from "next/font/google";
 import { getContent } from "@/content";
+import { GOAL_STORAGE_KEY } from "@/lib/goal";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -31,9 +32,26 @@ export const viewport: Viewport = {
   themeColor: "#09090a",
 };
 
-// Marks that JavaScript is running, so entrance animations may start hidden.
-// Browsers without IntersectionObserver keep everything visible.
-const jsFlag = `if ("IntersectionObserver" in window) document.documentElement.classList.add("js")`;
+// Runs before first paint:
+// 1. Marks that JavaScript is running (data-js), so entrance motion may start
+//    hidden. Browsers without IntersectionObserver keep everything visible.
+// 2. Puts the saved gate answer on <html data-goal> so a returning visitor goes
+//    straight to the page with no flash of the gate. ?reset clears the answer,
+//    ?goal=lose|gain sets it (handy for testing on a phone).
+const bootScript = `(function () {
+  var html = document.documentElement;
+  if (!("IntersectionObserver" in window)) return;
+  html.setAttribute("data-js", "");
+  try {
+    var key = ${JSON.stringify(GOAL_STORAGE_KEY)};
+    var params = new URLSearchParams(location.search);
+    if (params.has("reset")) localStorage.removeItem(key);
+    var fromUrl = params.get("goal");
+    if (fromUrl === "lose" || fromUrl === "gain") localStorage.setItem(key, fromUrl);
+    var goal = localStorage.getItem(key);
+    if (goal === "lose" || goal === "gain") html.setAttribute("data-goal", goal);
+  } catch (e) {}
+})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -44,7 +62,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: jsFlag }} />
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body>{children}</body>
     </html>

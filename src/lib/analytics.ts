@@ -5,7 +5,7 @@ export type AnalyticsEvent =
   | { name: "gate_choice"; goal: Goal }
   | { name: "video_play"; goal: Goal }
   | { name: "apply_click"; source: ApplySource; goal: Goal | null }
-  | { name: "typeform_open"; source: ApplySource };
+  | { name: "form_open"; source: ApplySource };
 
 export function track(event: AnalyticsEvent): void {
   // Logs in development only. A privacy-friendly analytics provider is wired up in Step 7.

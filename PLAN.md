@@ -14,10 +14,10 @@ The reference sketch (link in CLAUDE.md) is for structure, copy and flow only. I
 - [x] Add the Typeform URL as an env var and one shared Apply button component.
 
 ## Step 2: The gate ("What are you?")
-- [ ] Full-screen question shown first, before anything else, in a funny tone.
-- [ ] Two choices: **3egl** (calf) for someone heavy who wants to lose weight, and **Ma2asha** (broomstick) for someone skinny who wants to bulk up.
-- [ ] Store the goal (remember it between visits), reveal the page, with a reset option for development.
-- [ ] Placeholder illustrations clearly marked. The entrance and the choice should feel fun but fast.
+- [x] Full-screen question shown first, before anything else, in a funny tone.
+- [x] Two choices: **3egl** (calf) for someone heavy who wants to lose weight, and **Ma2asha** (broomstick) for someone skinny who wants to bulk up.
+- [x] Store the goal (remember it between visits), reveal the page, with a reset option for development.
+- [x] Placeholder illustrations clearly marked. The entrance and the choice should feel fun but fast.
 
 ## Step 3: The hero
 - [ ] Headline above the intro video, video centered and large, faded photo backdrop behind.

@@ -156,23 +156,23 @@
 }
 
 /* ---------- Entrance motion ----------
-   Hidden starting states apply only while JavaScript runs (the `js` class is
+   Hidden starting states apply only while JavaScript runs (the `data-js` attribute is
    set in layout.tsx) and only until the surrounding <Reveal> plays. With
    reduced motion everything is simply shown. */
 
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal]:not(.is-revealed) .rise {
+  [data-js] [data-reveal]:not(.is-revealed) .rise {
     transform: translateY(108%);
   }
-  .js [data-reveal]:not(.is-revealed) .fade {
+  [data-js] [data-reveal]:not(.is-revealed) .fade {
     opacity: 0;
     transform: translateY(24px);
   }
-  .js [data-reveal]:not(.is-revealed) .hl-band {
+  [data-js] [data-reveal]:not(.is-revealed) .hl-band {
     background-size: 0% 100%;
     color: var(--color-ink);
   }
-  .js [data-reveal]:not(.is-revealed) .hl-circle path {
+  [data-js] [data-reveal]:not(.is-revealed) .hl-circle path {
     stroke-dashoffset: 1;
   }
 
@@ -191,5 +191,53 @@
   }
   [data-reveal].is-revealed .hl-circle path {
     transition: stroke-dashoffset 900ms var(--ease-reveal) var(--circle-delay, 300ms);
+  }
+}
+
+/* ---------- Gate or page ----------
+   Decided by attributes the boot script in layout.tsx sets before first paint,
+   so a returning visitor never sees the gate flash. Unlayered on purpose, so
+   these win over the layout utilities on the same elements. */
+
+[data-js]:not([data-goal]) .page-root {
+  display: none;
+}
+[data-goal] .gate,
+html:not([data-js]) .gate {
+  display: none;
+}
+
+/* Programmatic focus target after the gate; no ring for a non-interactive landmark. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* The gate leaves a beat after the pick, so the chosen card's flash is seen. */
+.gate {
+  transition:
+    opacity 320ms ease 180ms,
+    transform 320ms var(--ease-reveal) 180ms;
+}
+.gate.is-leaving {
+  opacity: 0;
+  transform: translateY(-24px);
+}
+
+/* The picked creature does a quick bounce. */
+.choice.is-picked .choice-art svg {
+  animation: pick-bounce 360ms var(--ease-press);
+}
+@keyframes pick-bounce {
+  40% {
+    transform: scale(1.12) rotate(-4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate.is-leaving {
+    transform: none;
+  }
+  .choice.is-picked .choice-art svg {
+    animation: none;
   }
 }
